@@ -4,12 +4,13 @@ import com.barbasdev.weatherappsample.core.network.IWeatherApiClient
 import com.barbasdev.weatherappsample.core.presentation.Location
 import com.barbasdev.weatherappsample.core.presentation.Weather
 import io.reactivex.Single
+import javax.inject.Inject
 
 /**
  *
  */
-class ApixuWeatherApiClientImpl(
-        private val service: ApixuWeatherService
+class ApixuWeatherApiClientImpl @Inject constructor(
+        val service: ApixuWeatherService
 ) : IWeatherApiClient {
 
     override fun getLocation(location: String): Single<List<Location>> {
