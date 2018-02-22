@@ -2,10 +2,9 @@ package com.barbasdev.weatherappsample.di.component
 
 import com.barbasdev.weatherappsample.base.TestApplication
 import com.barbasdev.weatherappsample.base.WeatherApplication
-import com.barbasdev.weatherappsample.core.network.apixu.ApixuWeatherApiClientImplTest
-import com.barbasdev.weatherappsample.core.network.openweather.OpenWeatherWeatherApiClientImplTest
+import com.barbasdev.weatherappsample.core.network.apixu.ApixuWeatherApiClientDelegateTest
+import com.barbasdev.weatherappsample.core.network.openweather.OpenWeatherWeatherApiClientDelegateTest
 import com.barbasdev.weatherappsample.di.module.TestNetworkConstModule
-import com.barbasdev.weatherappsample.di.module.TestNetworkModule
 import com.barbasdev.weatherappsample.di.modules.*
 import dagger.BindsInstance
 import dagger.Component
@@ -23,7 +22,6 @@ import javax.inject.Singleton
         ActivityModule::class,
         DatabaseModule::class,
         NetworkModule::class,
-        TestNetworkModule::class,
         TestNetworkConstModule::class
 ))
 abstract class TestComponent {
@@ -36,7 +34,7 @@ abstract class TestComponent {
     }
 
     abstract fun inject(testApplication: TestApplication)
-    abstract fun inject(apixuWeatherApiClientImplTest: ApixuWeatherApiClientImplTest)
-    abstract fun inject(openWeatherWeatherApiClientImplTest: OpenWeatherWeatherApiClientImplTest)
+    abstract fun inject(apixuWeatherApiClientImplTest: ApixuWeatherApiClientDelegateTest)
+    abstract fun inject(openWeatherWeatherApiClientImplTest: OpenWeatherWeatherApiClientDelegateTest)
 
 }

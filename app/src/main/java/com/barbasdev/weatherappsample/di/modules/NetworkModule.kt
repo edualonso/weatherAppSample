@@ -2,10 +2,13 @@ package com.barbasdev.weatherappsample.di.modules
 
 import com.barbasdev.weatherappsample.BuildConfig
 import com.barbasdev.weatherappsample.core.network.ApiKeyInterceptor
+import com.barbasdev.weatherappsample.core.network.WeatherApiClient
 import com.barbasdev.weatherappsample.core.network.apixu.ApixuApiKeyInterceptor
+import com.barbasdev.weatherappsample.core.network.apixu.ApixuWeatherApiClientDelegate
 import com.barbasdev.weatherappsample.core.network.apixu.ApixuWeatherService
 import com.barbasdev.weatherappsample.core.network.openweather.OpenWeatherApiKeyInterceptor
 import com.barbasdev.weatherappsample.core.network.openweather.OpenWeatherService
+import com.barbasdev.weatherappsample.core.network.openweather.OpenWeatherWeatherApiClientDelegate
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -31,21 +34,38 @@ class NetworkModule {
     @Singleton
     fun providesApixuWeatherService(
             @Named(APIXU_BASE_URL) apixuBaseUrl: String,
-            apixuApiKeyInterceptor: ApixuApiKeyInterceptor
+            @Named(APIXU_API_KEY) apixuApiKey: String
     ): ApixuWeatherService {
-        return getRetrofit(apixuBaseUrl, apixuApiKeyInterceptor)
+        return getRetrofit(apixuBaseUrl, ApixuApiKeyInterceptor(apixuApiKey))
                 .create(ApixuWeatherService::class.java)
     }
 
     @Provides
     @Singleton
     fun providesOpenWeatherService(
-            @Named(APIXU_BASE_URL) openWeatherBaseUrl: String,
-            openWeatherApiKeyInterceptor: OpenWeatherApiKeyInterceptor
+            @Named(OPENWEATHER_BASE_URL) openWeatherBaseUrl: String,
+            @Named(OPENWEATHER_API_KEY) openWeatherApiKey: String
     ): OpenWeatherService {
-        return getRetrofit(openWeatherBaseUrl, openWeatherApiKeyInterceptor)
+        return getRetrofit(openWeatherBaseUrl, OpenWeatherApiKeyInterceptor(openWeatherApiKey))
                 .create(OpenWeatherService::class.java)
     }
+
+
+    //--------------------------------------------------------------------------------
+    // API clients
+    //--------------------------------------------------------------------------------
+
+    @Provides
+    @Named(APIXU_API_CLIENT)
+    @Singleton
+    fun providesApixuApiClient(delegate: ApixuWeatherApiClientDelegate): WeatherApiClient =
+            WeatherApiClient(delegate)
+
+    @Provides
+    @Named(OPENWEATHER_API_CLIENT)
+    @Singleton
+    fun providesOpenWeatherApiClient(delegate: OpenWeatherWeatherApiClientDelegate): WeatherApiClient =
+            WeatherApiClient(delegate)
 
 
     //--------------------------------------------------------------------------------

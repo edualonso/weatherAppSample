@@ -1,4 +1,4 @@
-package com.barbasdev.weatherappsample.core.presentation
+package com.barbasdev.weatherappsample.core.presentation.location
 
 /**
  *

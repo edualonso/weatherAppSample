@@ -18,8 +18,7 @@ import javax.inject.Singleton
         ActivityModule::class,
         DatabaseModule::class,
         NetworkModule::class,
-        NetworkConstModule::class,
-        ConstModule::class
+        NetworkConstModule::class
 ))
 abstract class ApplicationComponent {
 

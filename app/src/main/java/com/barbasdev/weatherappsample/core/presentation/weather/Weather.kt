@@ -1,4 +1,6 @@
-package com.barbasdev.weatherappsample.core.presentation
+package com.barbasdev.weatherappsample.core.presentation.weather
+
+import com.barbasdev.weatherappsample.core.presentation.location.Location
 
 /**
  *
@@ -16,5 +18,5 @@ interface IWeather {
  *
  */
 data class Weather(
-        val delegate: IWeather
+        private val delegate: IWeather
 ) : IWeather by delegate

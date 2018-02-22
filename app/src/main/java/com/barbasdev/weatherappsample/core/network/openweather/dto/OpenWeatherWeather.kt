@@ -1,4 +1,4 @@
-package com.barbasdev.weatherappsample.core.data.openweather
+package com.barbasdev.weatherappsample.core.network.openweather.dto
 
 /**
  *

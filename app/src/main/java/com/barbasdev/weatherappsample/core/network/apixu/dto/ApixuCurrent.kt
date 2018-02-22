@@ -1,4 +1,4 @@
-package com.barbasdev.weatherappsample.core.data.apixu
+package com.barbasdev.weatherappsample.core.network.apixu.dto
 
 import com.google.gson.annotations.SerializedName
 

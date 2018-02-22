@@ -1,32 +1,38 @@
-package com.barbasdev.weatherappsample.core.network.openweather
+package com.barbasdev.weatherappsample.core.network.apixu
 
 import com.barbasdev.weatherappsample.base.TestApplication
 import com.barbasdev.weatherappsample.core.network.WeatherApiClient
 import com.barbasdev.weatherappsample.di.module.TestNetworkConstModule
+import com.barbasdev.weatherappsample.di.modules.NetworkModule
 import junit.framework.Assert
+import junit.framework.Assert.assertEquals
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * Created by edu on 22/02/2018.
  */
-class OpenWeatherWeatherApiClientImplTest {
+class ApixuWeatherApiClientDelegateTest {
 
     @Inject
-    lateinit var server: MockWebServer
-    @Inject
-    lateinit var openWeatherDelegate: OpenWeatherWeatherApiClientImpl
+    @field:Named(NetworkModule.APIXU_API_CLIENT)
+    lateinit var apixuApiClient: WeatherApiClient
 
-    private val apixuWeatherApiClient by lazy { WeatherApiClient(openWeatherDelegate) }
+    private lateinit var server: MockWebServer
 
     @Before
     fun setUp() {
         TestApplication.testComponent
                 .inject(this)
+
+        server = MockWebServer().apply {
+            start(TestNetworkConstModule.SERVER_PORT)
+        }
     }
 
     @After
@@ -36,11 +42,10 @@ class OpenWeatherWeatherApiClientImplTest {
 
     @Test
     fun getLocation() {
-        server.start(TestNetworkConstModule.SERVER_PORT)
-        server.enqueue(MockResponse().setBody(JSON.response))
+        server.enqueue(MockResponse().setBody(JSON.RESPONSE_LOCATION))
 
-        val locations = apixuWeatherApiClient
-                .getLocation("madrid")
+        val locations = apixuApiClient
+                .getLocation("KAHSDKHEJKHKHASKDHJ")
                 .test()
                 .await()
                 .values()[0]
@@ -57,8 +62,26 @@ class OpenWeatherWeatherApiClientImplTest {
         Assert.assertEquals("Barrio Pavones, Madrid, Spain", locations[9].name)
     }
 
+    @Test
+    fun getWeather() {
+        server.enqueue(MockResponse().setBody(JSON.RESPONSE_WEATHER))
+
+        val weather = apixuApiClient
+                .getWeather("AHSDASJDahjsdgas21")
+                .test()
+                .await()
+                .values()[0]
+
+        assertEquals(weather.lastUpdated, 1519338644L)
+        assertEquals(weather.location.id, 0)
+        assertEquals(weather.location.name, "London")
+        assertEquals(weather.location.country, "United Kingdom")
+        assertEquals(weather.location.lat, 51.52F)
+        assertEquals(weather.location.lon, -0.11F)
+    }
+
     object JSON {
-        const val response =
+        const val RESPONSE_LOCATION =
                 """
 [
   {
@@ -152,6 +175,48 @@ class OpenWeatherWeatherApiClientImplTest {
     "url": "barrio-pavones-madrid-spain"
   }
 ]
+"""
+
+        const val RESPONSE_WEATHER =
+"""
+{
+    "location": {
+        "name": "London",
+        "region": "City of London, Greater London",
+        "country": "United Kingdom",
+        "lat": 51.52,
+        "lon": -0.11,
+        "tz_id": "Europe/London",
+        "localtime_epoch": 1519338701,
+        "localtime": "2018-02-22 22:31"
+    },
+    "current": {
+        "last_updated_epoch": 1519338644,
+        "last_updated": "2018-02-22 22:30",
+        "temp_c": 2,
+        "temp_f": 35.6,
+        "is_day": 0,
+        "condition": {
+            "text": "Clear",
+            "icon": "//cdn.apixu.com/weather/64x64/night/113.png",
+            "code": 1000
+        },
+        "wind_mph": 4.3,
+        "wind_kph": 6.8,
+        "wind_degree": 60,
+        "wind_dir": "ENE",
+        "pressure_mb": 1023,
+        "pressure_in": 30.7,
+        "precip_mm": 0,
+        "precip_in": 0,
+        "humidity": 75,
+        "cloud": 0,
+        "feelslike_c": 0,
+        "feelslike_f": 32,
+        "vis_km": 10,
+        "vis_miles": 6
+    }
+}
 """
     }
 }

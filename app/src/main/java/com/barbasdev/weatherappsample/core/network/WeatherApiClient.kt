@@ -1,9 +1,8 @@
 package com.barbasdev.weatherappsample.core.network
 
-import com.barbasdev.weatherappsample.core.presentation.Location
-import com.barbasdev.weatherappsample.core.presentation.Weather
+import com.barbasdev.weatherappsample.core.presentation.location.Location
+import com.barbasdev.weatherappsample.core.presentation.weather.Weather
 import io.reactivex.Single
-import javax.inject.Inject
 
 /**
  *
@@ -18,6 +17,6 @@ interface IWeatherApiClient {
 /**
  *
  */
-class WeatherApiClient @Inject constructor(
+class WeatherApiClient(
         private val delegate: IWeatherApiClient
 ) : IWeatherApiClient by delegate

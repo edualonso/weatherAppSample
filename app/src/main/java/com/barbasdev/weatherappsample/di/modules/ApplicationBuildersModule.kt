@@ -1,6 +1,6 @@
 package com.barbasdev.weatherappsample.di.modules
 
-import com.barbasdev.weatherappsample.MainActivity
+import com.barbasdev.weatherappsample.main.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
