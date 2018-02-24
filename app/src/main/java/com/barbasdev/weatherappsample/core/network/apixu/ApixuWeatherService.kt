@@ -1,7 +1,7 @@
 package com.barbasdev.weatherappsample.core.network.apixu
 
-import com.barbasdev.weatherappsample.core.data.apixu.ApixuCurrentWeather
-import com.barbasdev.weatherappsample.core.data.apixu.ApixuLocation
+import com.barbasdev.weatherappsample.core.network.apixu.dto.ApixuCurrentWeather
+import com.barbasdev.weatherappsample.core.network.apixu.dto.ApixuLocation
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -15,7 +15,7 @@ interface ApixuWeatherService {
     fun getLocation(@Query(QUERY) location: String): Single<List<ApixuLocation>>
 
     @GET(CURRENT_WEATHER)
-    fun getWeather(@Query(QUERY) nameAndCoordinates: String): Single<ApixuCurrentWeather>
+    fun getWeather(@Query(QUERY) location: String): Single<ApixuCurrentWeather>
 
     companion object {
         const val AUTOCOMPLETION = "search.json"
