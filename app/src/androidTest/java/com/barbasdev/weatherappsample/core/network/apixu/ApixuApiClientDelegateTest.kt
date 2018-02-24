@@ -1,7 +1,7 @@
 package com.barbasdev.weatherappsample.core.network.apixu
 
 import com.barbasdev.weatherappsample.base.TestApplication
-import com.barbasdev.weatherappsample.core.network.WeatherApiClient
+import com.barbasdev.weatherappsample.core.network.ApiClient
 import com.barbasdev.weatherappsample.di.module.TestNetworkConstModule
 import com.barbasdev.weatherappsample.di.modules.NetworkModule
 import junit.framework.Assert
@@ -17,11 +17,11 @@ import javax.inject.Named
 /**
  * Created by edu on 22/02/2018.
  */
-class ApixuWeatherApiClientDelegateTest {
+class ApixuApiClientDelegateTest {
 
     @Inject
     @field:Named(NetworkModule.APIXU_API_CLIENT)
-    lateinit var apixuApiClient: WeatherApiClient
+    lateinit var apixuApiClient: ApiClient
 
     private lateinit var server: MockWebServer
 

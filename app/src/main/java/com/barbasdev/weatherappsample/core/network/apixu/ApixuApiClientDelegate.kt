@@ -1,6 +1,6 @@
 package com.barbasdev.weatherappsample.core.network.apixu
 
-import com.barbasdev.weatherappsample.core.network.IWeatherApiClient
+import com.barbasdev.weatherappsample.core.network.IApiClient
 import com.barbasdev.weatherappsample.core.presentation.location.Location
 import com.barbasdev.weatherappsample.core.presentation.location.delegate.ApixuLocationDelegate
 import com.barbasdev.weatherappsample.core.presentation.weather.Weather
@@ -11,9 +11,9 @@ import javax.inject.Inject
 /**
  *
  */
-class ApixuWeatherApiClientDelegate @Inject constructor(
+class ApixuApiClientDelegate @Inject constructor(
         private val service: ApixuWeatherService
-) : IWeatherApiClient {
+) : IApiClient {
 
     override fun getLocation(location: String): Single<List<Location>> {
         return service

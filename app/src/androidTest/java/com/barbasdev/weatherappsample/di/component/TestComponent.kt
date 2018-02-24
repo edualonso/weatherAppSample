@@ -2,8 +2,8 @@ package com.barbasdev.weatherappsample.di.component
 
 import com.barbasdev.weatherappsample.base.TestApplication
 import com.barbasdev.weatherappsample.base.WeatherApplication
-import com.barbasdev.weatherappsample.core.network.apixu.ApixuWeatherApiClientDelegateTest
-import com.barbasdev.weatherappsample.core.network.openweather.OpenWeatherWeatherApiClientDelegateTest
+import com.barbasdev.weatherappsample.core.network.apixu.ApixuApiClientDelegateTest
+import com.barbasdev.weatherappsample.core.network.openweather.OpenWeatherApiClientDelegateTest
 import com.barbasdev.weatherappsample.di.module.TestNetworkConstModule
 import com.barbasdev.weatherappsample.di.modules.*
 import dagger.BindsInstance
@@ -34,7 +34,7 @@ abstract class TestComponent {
     }
 
     abstract fun inject(testApplication: TestApplication)
-    abstract fun inject(apixuWeatherApiClientImplTest: ApixuWeatherApiClientDelegateTest)
-    abstract fun inject(openWeatherWeatherApiClientImplTest: OpenWeatherWeatherApiClientDelegateTest)
+    abstract fun inject(apixuApiClientImplTest: ApixuApiClientDelegateTest)
+    abstract fun inject(openWeatherApiClientImplTest: OpenWeatherApiClientDelegateTest)
 
 }

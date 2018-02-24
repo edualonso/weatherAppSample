@@ -1,6 +1,6 @@
 package com.barbasdev.weatherappsample.core.network.openweather
 
-import com.barbasdev.weatherappsample.core.network.IWeatherApiClient
+import com.barbasdev.weatherappsample.core.network.IApiClient
 import com.barbasdev.weatherappsample.core.network.openweather.dto.OpenWeatherCoord
 import com.barbasdev.weatherappsample.core.network.openweather.dto.OpenWeatherLocation
 import com.barbasdev.weatherappsample.core.presentation.location.Location
@@ -13,9 +13,9 @@ import javax.inject.Inject
 /**
  *
  */
-class OpenWeatherWeatherApiClientDelegate @Inject constructor(
+class OpenWeatherApiClientDelegate @Inject constructor(
         private val service: OpenWeatherService
-) : IWeatherApiClient {
+) : IApiClient {
 
     override fun getLocation(location: String): Single<List<Location>> {
         return Single.fromCallable {

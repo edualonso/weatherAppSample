@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import com.barbasdev.weatherappsample.R
 import com.barbasdev.weatherappsample.base.BaseActivity
-import com.barbasdev.weatherappsample.core.network.WeatherApiClient
+import com.barbasdev.weatherappsample.core.network.ApiClient
 import com.barbasdev.weatherappsample.core.network.openweather.dto.OpenWeatherCoord
 import com.barbasdev.weatherappsample.core.network.openweather.dto.OpenWeatherLocation
 import com.barbasdev.weatherappsample.core.presentation.location.Location
@@ -19,24 +19,24 @@ class MainActivity : BaseActivity() {
 
     @Inject
     @field:Named(NetworkModule.APIXU_API_CLIENT)
-    lateinit var apixuWeatherApiClient: WeatherApiClient
+    lateinit var apixuApiClient: ApiClient
 
     @Inject
     @field:Named(NetworkModule.OPENWEATHER_API_CLIENT)
-    lateinit var openWeatherWeatherApiClient: WeatherApiClient
+    lateinit var openWeatherApiClient: ApiClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        fetchLocation(apixuWeatherApiClient)
-        fetchLocation(openWeatherWeatherApiClient)
+        fetchLocation(apixuApiClient)
+        fetchLocation(openWeatherApiClient)
 
-        fetchWeather(apixuWeatherApiClient)
-        fetchWeather(openWeatherWeatherApiClient)
+        fetchWeather(apixuApiClient)
+        fetchWeather(openWeatherApiClient)
     }
 
-    private fun fetchLocation(apiClient: WeatherApiClient) {
+    private fun fetchLocation(apiClient: ApiClient) {
         apiClient
                 .getLocation("madrid")
                 .subscribeOn(Schedulers.io())
@@ -60,7 +60,7 @@ class MainActivity : BaseActivity() {
                 }
     }
 
-    private fun fetchWeather(apiClient: WeatherApiClient) {
+    private fun fetchWeather(apiClient: ApiClient) {
         apiClient
                 .getWeather("madrid")
                 .subscribeOn(Schedulers.io())

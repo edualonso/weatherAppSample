@@ -7,7 +7,7 @@ import io.reactivex.Single
 /**
  *
  */
-interface IWeatherApiClient {
+interface IApiClient {
 
     fun getLocation(location: String): Single<List<Location>>
     fun getWeather(location: String): Single<Weather>
@@ -17,6 +17,6 @@ interface IWeatherApiClient {
 /**
  *
  */
-class WeatherApiClient(
-        private val delegate: IWeatherApiClient
-) : IWeatherApiClient by delegate
+class ApiClient(
+        private val delegate: IApiClient
+) : IApiClient by delegate
