@@ -8,11 +8,10 @@ import io.reactivex.Single
  *
  */
 interface IApiClient {
-
     fun getLocation(location: String): Single<List<Location>>
     fun getWeather(location: String): Single<Weather>
-
 }
+
 
 /**
  *

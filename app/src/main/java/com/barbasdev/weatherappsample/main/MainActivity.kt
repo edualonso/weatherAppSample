@@ -2,14 +2,11 @@ package com.barbasdev.weatherappsample.main
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import com.barbasdev.weatherappsample.R
 import com.barbasdev.weatherappsample.base.BaseActivity
-import com.barbasdev.weatherappsample.core.network.ApiClient
-import com.barbasdev.weatherappsample.core.network.openweather.dto.OpenWeatherCoord
-import com.barbasdev.weatherappsample.core.network.openweather.dto.OpenWeatherLocation
-import com.barbasdev.weatherappsample.core.presentation.location.Location
-import com.barbasdev.weatherappsample.core.presentation.location.delegate.OpenWeatherLocationDelegate
-import com.barbasdev.weatherappsample.di.modules.NetworkModule
+import com.barbasdev.weatherappsample.core.persistence.Repository
+import com.barbasdev.weatherappsample.di.modules.RepositoryModule
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -18,55 +15,33 @@ import javax.inject.Named
 class MainActivity : BaseActivity() {
 
     @Inject
-    @field:Named(NetworkModule.APIXU_API_CLIENT)
-    lateinit var apixuApiClient: ApiClient
+    @field:Named(RepositoryModule.REPOSITORY_MEMORY_APIXU)
+    lateinit var memoryRepositoryApixu: Repository
 
-    @Inject
-    @field:Named(NetworkModule.OPENWEATHER_API_CLIENT)
-    lateinit var openWeatherApiClient: ApiClient
+//    @Inject
+//    @field:Named(RepositoryModule.REPOSITORY_MEMORY_OPENWEATHER)
+//    lateinit var memoryRepositoryOpenWeather: Repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        fetchLocation(apixuApiClient)
-        fetchLocation(openWeatherApiClient)
-
-        fetchWeather(apixuApiClient)
-        fetchWeather(openWeatherApiClient)
+        findViewById<Button>(R.id.button).setOnClickListener {
+            Log.e("------------------", "-----------> FETCHING WEATHER")
+            fetchWeather()
+        }
     }
 
-    private fun fetchLocation(apiClient: ApiClient) {
-        apiClient
-                .getLocation("madrid")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnError {
-                    Log.e("APIXU ---------", "-----------> ERROR: ${it.message}")
-                }
-                .onErrorReturn {
-                    val locationDto = OpenWeatherLocation(69,
-                            "69-CITY",
-                            "69-COUNTRY",
-                            OpenWeatherCoord(69.69F, -69.69F)
-                    )
-                    val location = Location(OpenWeatherLocationDelegate(locationDto))
-                    listOf(location)
-                }
-                .subscribe { results ->
-                    results.map {
-                        Log.d("APIXU ---------", "-----------> LOCATIONS: ${it.name}")
-                    }
-                }
-    }
-
-    private fun fetchWeather(apiClient: ApiClient) {
-        apiClient
+    private fun fetchWeather() {
+        memoryRepositoryApixu
                 .getWeather("madrid")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnError {
+                    Log.e("------------------", "-----------> ERROR: ${it.message}")
+                }
                 .subscribe { weather ->
-                    Log.d("APIXU ---------", "-----------> WEATHER: ${weather.location.name} updated at ${weather.lastUpdated}")
+                    Log.e("------------------", "-----------> WEATHER: ${weather.location.name} updated at ${weather.lastUpdated}")
                 }
     }
 }
