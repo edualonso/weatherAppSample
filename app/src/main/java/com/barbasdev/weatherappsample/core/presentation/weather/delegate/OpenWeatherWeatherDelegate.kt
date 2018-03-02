@@ -14,8 +14,10 @@ data class OpenWeatherWeatherDelegate(
         private val weather: OpenWeatherWeatherResult
 ) : IWeather {
 
+    private val syncTime = System.currentTimeMillis()
+
     override val lastUpdated: Long
-        get() = weather.dt ?: System.currentTimeMillis()
+        get() = syncTime
     override val location: Location
         get() {
             with(weather) {

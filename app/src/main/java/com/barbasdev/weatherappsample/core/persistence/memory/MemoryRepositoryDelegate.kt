@@ -17,13 +17,9 @@ class MemoryRepositoryDelegate(
     private val weatherCache = mutableListOf<Weather>()
 
     override fun getWeather(location: String): Single<Weather> {
-        return Single.create<Weather> {
-            val weather = getWeatherFromApi(location)
+        return getWeatherFromApi(location)
                     .startWith(getWeatherFromCache(location))
-                    .blockingFirst()
-
-            it.onSuccess(weather)
-        }
+                    .firstOrError()
     }
 
     private fun getWeatherFromCache(location: String): Observable<Weather> {
@@ -33,8 +29,13 @@ class MemoryRepositoryDelegate(
                         it.location.name.contains(location, true)
                     }.apply {
                         if (this != null) {
-                            Log.e("------------------", "-----------> WEATHER FETCHED FROM THE CACHE")
-                            it.onNext(this)
+                            if (System.currentTimeMillis() - lastUpdated < 60000) {
+                                Log.e("------------------", "-----------> WEATHER FETCHED FROM THE CACHE")
+                                it.onNext(this)
+                            } else {
+                                Log.e("------------------", "-----------> WEATHER FROM CACHE EXPIRED")
+                                weatherCache.remove(this)
+                            }
                         }
                         it.onComplete()
                     }

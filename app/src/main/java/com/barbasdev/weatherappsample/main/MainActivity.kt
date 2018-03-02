@@ -14,13 +14,13 @@ import javax.inject.Named
 
 class MainActivity : BaseActivity() {
 
-    @Inject
-    @field:Named(RepositoryModule.REPOSITORY_MEMORY_APIXU)
-    lateinit var memoryRepositoryApixu: Repository
-
 //    @Inject
-//    @field:Named(RepositoryModule.REPOSITORY_MEMORY_OPENWEATHER)
-//    lateinit var memoryRepositoryOpenWeather: Repository
+//    @field:Named(RepositoryModule.REPOSITORY_MEMORY_APIXU)
+//    lateinit var memoryRepository: Repository
+
+    @Inject
+    @field:Named(RepositoryModule.REPOSITORY_MEMORY_OPENWEATHER)
+    lateinit var memoryRepository: Repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun fetchWeather() {
-        memoryRepositoryApixu
+        memoryRepository
                 .getWeather("madrid")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
