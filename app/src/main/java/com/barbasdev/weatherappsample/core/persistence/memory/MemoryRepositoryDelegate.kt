@@ -1,9 +1,9 @@
 package com.barbasdev.weatherappsample.core.persistence.memory
 
 import android.util.Log
-import com.barbasdev.weatherappsample.core.network.ApiClient
-import com.barbasdev.weatherappsample.core.persistence.IRepository
-import com.barbasdev.weatherappsample.core.presentation.weather.Weather
+import com.barbasdev.weatherappsample.core.network.ApiClientImpl
+import com.barbasdev.weatherappsample.core.persistence.Repository
+import com.barbasdev.weatherappsample.core.presentation.weather.WeatherImpl
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -11,19 +11,19 @@ import io.reactivex.Single
  *
  */
 class MemoryRepositoryDelegate(
-        private val apiClient: ApiClient
-) : IRepository {
+        private val apiClient: ApiClientImpl
+) : Repository {
 
-    private val weatherCache = mutableListOf<Weather>()
+    private val weatherCache = mutableListOf<WeatherImpl>()
 
-    override fun getWeather(location: String): Single<Weather> {
+    override fun getWeather(location: String): Single<WeatherImpl> {
         return getWeatherFromApi(location)
                     .startWith(getWeatherFromCache(location))
                     .firstOrError()
     }
 
-    private fun getWeatherFromCache(location: String): Observable<Weather> {
-        return Observable.create<Weather> {
+    private fun getWeatherFromCache(location: String): Observable<WeatherImpl> {
+        return Observable.create<WeatherImpl> {
             weatherCache
                     .find {
                         it.location.name.contains(location, true)
@@ -42,7 +42,7 @@ class MemoryRepositoryDelegate(
         }
     }
 
-    private fun getWeatherFromApi(location: String): Observable<Weather> {
+    private fun getWeatherFromApi(location: String): Observable<WeatherImpl> {
         return apiClient
                 .getWeather(location)
                 .doOnSuccess {

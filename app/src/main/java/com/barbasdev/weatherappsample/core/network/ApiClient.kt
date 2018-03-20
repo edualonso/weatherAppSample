@@ -1,21 +1,21 @@
 package com.barbasdev.weatherappsample.core.network
 
-import com.barbasdev.weatherappsample.core.presentation.location.Location
-import com.barbasdev.weatherappsample.core.presentation.weather.Weather
+import com.barbasdev.weatherappsample.core.presentation.location.LocationImpl
+import com.barbasdev.weatherappsample.core.presentation.weather.WeatherImpl
 import io.reactivex.Single
 
 /**
  *
  */
-interface IApiClient {
-    fun getLocation(location: String): Single<List<Location>>
-    fun getWeather(location: String): Single<Weather>
+interface ApiClient {
+    fun getLocation(location: String): Single<List<LocationImpl>>
+    fun getWeather(location: String): Single<WeatherImpl>
 }
 
 
 /**
  *
  */
-class ApiClient(
-        private val delegate: IApiClient
-) : IApiClient by delegate
+class ApiClientImpl(
+        private val delegate: ApiClient
+) : ApiClient by delegate

@@ -1,7 +1,7 @@
 package com.barbasdev.weatherappsample.core.network.apixu
 
 import com.barbasdev.weatherappsample.base.TestApplication
-import com.barbasdev.weatherappsample.core.network.ApiClient
+import com.barbasdev.weatherappsample.core.network.ApiClientImpl
 import com.barbasdev.weatherappsample.di.module.TestNetworkConstModule
 import com.barbasdev.weatherappsample.di.modules.NetworkModule
 import junit.framework.Assert
@@ -21,7 +21,7 @@ class ApixuApiClientDelegateTest {
 
     @Inject
     @field:Named(NetworkModule.APIXU_API_CLIENT)
-    lateinit var apixuApiClient: ApiClient
+    lateinit var apixuApiClient: ApiClientImpl
 
     private lateinit var server: MockWebServer
 

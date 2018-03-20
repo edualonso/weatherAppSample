@@ -5,7 +5,7 @@ import android.util.Log
 import android.widget.Button
 import com.barbasdev.weatherappsample.R
 import com.barbasdev.weatherappsample.base.BaseActivity
-import com.barbasdev.weatherappsample.core.persistence.Repository
+import com.barbasdev.weatherappsample.core.persistence.RepositoryImpl
 import com.barbasdev.weatherappsample.di.modules.RepositoryModule
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -20,7 +20,7 @@ class MainActivity : BaseActivity() {
 
     @Inject
     @field:Named(RepositoryModule.REPOSITORY_MEMORY_OPENWEATHER)
-    lateinit var memoryRepository: Repository
+    lateinit var memoryRepository: RepositoryImpl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

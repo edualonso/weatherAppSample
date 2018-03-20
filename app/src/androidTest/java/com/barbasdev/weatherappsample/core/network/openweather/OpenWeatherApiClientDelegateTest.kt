@@ -1,7 +1,7 @@
 package com.barbasdev.weatherappsample.core.network.openweather
 
 import com.barbasdev.weatherappsample.base.TestApplication
-import com.barbasdev.weatherappsample.core.network.ApiClient
+import com.barbasdev.weatherappsample.core.network.ApiClientImpl
 import com.barbasdev.weatherappsample.di.module.TestNetworkConstModule
 import com.barbasdev.weatherappsample.di.modules.NetworkModule
 import junit.framework.Assert
@@ -20,7 +20,7 @@ class OpenWeatherApiClientDelegateTest {
 
     @Inject
     @field:Named(NetworkModule.OPENWEATHER_API_CLIENT)
-    lateinit var openWeatherApiClient: ApiClient
+    lateinit var openWeatherApiClient: ApiClientImpl
 
     private lateinit var server: MockWebServer
 

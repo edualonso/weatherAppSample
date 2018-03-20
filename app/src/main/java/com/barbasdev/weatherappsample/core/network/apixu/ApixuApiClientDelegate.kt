@@ -1,9 +1,9 @@
 package com.barbasdev.weatherappsample.core.network.apixu
 
-import com.barbasdev.weatherappsample.core.network.IApiClient
-import com.barbasdev.weatherappsample.core.presentation.location.Location
+import com.barbasdev.weatherappsample.core.network.ApiClient
+import com.barbasdev.weatherappsample.core.presentation.location.LocationImpl
 import com.barbasdev.weatherappsample.core.presentation.location.delegate.ApixuLocationDelegate
-import com.barbasdev.weatherappsample.core.presentation.weather.Weather
+import com.barbasdev.weatherappsample.core.presentation.weather.WeatherImpl
 import com.barbasdev.weatherappsample.core.presentation.weather.delegate.ApixuWeatherDelegate
 import io.reactivex.Single
 import javax.inject.Inject
@@ -13,22 +13,22 @@ import javax.inject.Inject
  */
 class ApixuApiClientDelegate @Inject constructor(
         private val service: ApixuWeatherService
-) : IApiClient {
+) : ApiClient {
 
-    override fun getLocation(location: String): Single<List<Location>> {
+    override fun getLocation(location: String): Single<List<LocationImpl>> {
         return service
                 .getLocation(location)
                 .map {
                     it.map {
-                        Location(ApixuLocationDelegate(it))
+                        LocationImpl(ApixuLocationDelegate(it))
                     }
                 }
     }
 
-    override fun getWeather(location: String): Single<Weather> {
+    override fun getWeather(location: String): Single<WeatherImpl> {
         return service.getWeather(location)
                 .map {
-                    Weather(ApixuWeatherDelegate(it))
+                    WeatherImpl(ApixuWeatherDelegate(it))
                 }
     }
 

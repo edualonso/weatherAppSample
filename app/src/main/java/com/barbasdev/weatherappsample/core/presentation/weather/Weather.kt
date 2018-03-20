@@ -1,13 +1,13 @@
 package com.barbasdev.weatherappsample.core.presentation.weather
 
-import com.barbasdev.weatherappsample.core.presentation.location.Location
+import com.barbasdev.weatherappsample.core.presentation.location.LocationImpl
 
 /**
  *
  */
-interface IWeather {
+interface Weather {
     val lastUpdated: Long
-    val location: Location
+    val location: LocationImpl
 
     companion object {
         const val NO_COORDS_VALUE = -1F
@@ -17,6 +17,6 @@ interface IWeather {
 /**
  *
  */
-data class Weather(
-        private val delegate: IWeather
-) : IWeather by delegate
+data class WeatherImpl(
+        private val delegate: Weather
+) : Weather by delegate

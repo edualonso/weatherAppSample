@@ -3,7 +3,7 @@ package com.barbasdev.weatherappsample.core.presentation.location
 /**
  *
  */
-interface ILocation {
+interface Location {
     val id: Long
     val name: String
     val country: String
@@ -14,6 +14,6 @@ interface ILocation {
 /**
  *
  */
-data class Location(
-        private val delegate: ILocation
-) : ILocation by delegate
+data class LocationImpl(
+        private val delegate: Location
+) : Location by delegate

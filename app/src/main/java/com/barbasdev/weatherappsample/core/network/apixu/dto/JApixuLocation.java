@@ -1,13 +1,13 @@
 package com.barbasdev.weatherappsample.core.network.apixu.dto;
 
-import com.barbasdev.weatherappsample.core.presentation.location.JILocation;
+import com.barbasdev.weatherappsample.core.presentation.location.JLocation;
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by edu on 24/02/2018.
  */
 
-public class JApixuLocation implements JILocation {
+public class JApixuLocation implements JLocation {
 
     private Long id;
     private String name;

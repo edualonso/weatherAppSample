@@ -1,13 +1,13 @@
 package com.barbasdev.weatherappsample.core.presentation.location.delegate;
 
 import com.barbasdev.weatherappsample.core.network.apixu.dto.JApixuLocation;
-import com.barbasdev.weatherappsample.core.presentation.location.JILocation;
+import com.barbasdev.weatherappsample.core.presentation.location.JLocation;
 
 /**
  * Created by edu on 24/02/2018.
  */
 
-public class JApixuLocationDelegate implements JILocation {
+public class JApixuLocationDelegate implements JLocation {
 
     private JApixuLocation location;
 
