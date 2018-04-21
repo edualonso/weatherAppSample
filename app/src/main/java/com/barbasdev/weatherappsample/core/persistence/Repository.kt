@@ -1,13 +1,13 @@
 package com.barbasdev.weatherappsample.core.persistence
 
-import com.barbasdev.weatherappsample.core.presentation.weather.WeatherImpl
+import com.barbasdev.weatherappsample.core.presentation.weather.Weather
 import io.reactivex.Single
 
 /**
  *
  */
 interface Repository {
-    fun getWeather(location: String): Single<WeatherImpl>
+    fun getWeather(location: String): Single<Weather>
 }
 
 

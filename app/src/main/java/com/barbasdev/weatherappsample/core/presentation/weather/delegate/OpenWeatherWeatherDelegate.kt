@@ -18,6 +18,8 @@ data class OpenWeatherWeatherDelegate(
 
     override val lastUpdated: Long
         get() = syncTime
+    override val temperature: Float
+        get() = weather.main?.temp ?: -666F
     override val location: LocationImpl
         get() {
             with(weather) {

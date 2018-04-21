@@ -2,7 +2,7 @@ package com.barbasdev.weatherappsample.core.persistence.memory
 
 import com.barbasdev.weatherappsample.base.TestApplication
 import com.barbasdev.weatherappsample.core.network.apixu.ApixuApiClientDelegateTest
-import com.barbasdev.weatherappsample.core.persistence.RepositoryImpl
+import com.barbasdev.weatherappsample.core.persistence.Repository
 import com.barbasdev.weatherappsample.di.module.TestNetworkConstModule
 import com.barbasdev.weatherappsample.di.modules.RepositoryModule
 import okhttp3.mockwebserver.MockResponse
@@ -20,11 +20,11 @@ class MemoryRepositoryDelegateTest {
 
     @Inject
     @field:Named(RepositoryModule.REPOSITORY_MEMORY_APIXU)
-    lateinit var apixuMemoryRepository: RepositoryImpl
+    lateinit var apixuMemoryRepository: Repository
 
     @Inject
     @field:Named(RepositoryModule.REPOSITORY_MEMORY_OPENWEATHER)
-    lateinit var openWeatherMemoryRepository: RepositoryImpl
+    lateinit var openWeatherMemoryRepository: Repository
 
     private lateinit var server: MockWebServer
 

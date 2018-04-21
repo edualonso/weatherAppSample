@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import io.realm.RealmConfiguration
 
+
 /**
  *
  */
@@ -14,12 +15,21 @@ class DatabaseModule {
     fun providesRealmConfiguration(): RealmConfiguration {
         return RealmConfiguration.Builder()
                 .name("weather.realm")
-                .schemaVersion(DB_SCHEMA)
+                .schemaVersion(REALM_DB_SCHEMA)
                 .deleteRealmIfMigrationNeeded()
                 .build()
     }
 
+//    @Provides
+//    fun providesRoom(context: Context): AppRoomDatabase {
+//        return Room
+//                .databaseBuilder(context, AppRoomDatabase::class.java, "weatherAppRoomDatabase")
+//                .build()
+//    }
+
     companion object {
-        const val DB_SCHEMA = 1L
+        const val REALM_DB_SCHEMA = 1L
+
+        const val ROOM_DB_SCHEMA = 1
     }
 }

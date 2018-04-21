@@ -7,6 +7,7 @@ import com.barbasdev.weatherappsample.core.presentation.location.LocationImpl
  */
 interface Weather {
     val lastUpdated: Long
+    val temperature: Float
     val location: LocationImpl
 
     companion object {

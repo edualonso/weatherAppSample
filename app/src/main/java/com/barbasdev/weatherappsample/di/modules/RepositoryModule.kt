@@ -1,6 +1,7 @@
 package com.barbasdev.weatherappsample.di.modules
 
 import com.barbasdev.weatherappsample.core.network.ApiClientImpl
+import com.barbasdev.weatherappsample.core.persistence.Repository
 import com.barbasdev.weatherappsample.core.persistence.RepositoryImpl
 import com.barbasdev.weatherappsample.core.persistence.memory.MemoryRepositoryDelegate
 import dagger.Module
@@ -19,7 +20,7 @@ class RepositoryModule {
     @Singleton
     fun providesMemoryRepositoryApixu(
             @Named(NetworkModule.APIXU_API_CLIENT) apiClient: ApiClientImpl
-    ): RepositoryImpl =
+    ): Repository =
             RepositoryImpl(MemoryRepositoryDelegate(apiClient))
 
     @Provides
@@ -27,12 +28,12 @@ class RepositoryModule {
     @Singleton
     fun providesMemoryRepositoryOpenWeather(
             @Named(NetworkModule.OPENWEATHER_API_CLIENT) apiClient: ApiClientImpl
-    ): RepositoryImpl =
+    ): Repository =
             RepositoryImpl(MemoryRepositoryDelegate(apiClient))
 
 
     companion object {
-        const val REPOSITORY_MEMORY_APIXU = "REPOSITORY_MEMORY_APIXU"
-        const val REPOSITORY_MEMORY_OPENWEATHER = "REPOSITORY_MEMORY_OPENWEATHER"
+        const val REPOSITORY_MEMORY_APIXU           = "REPOSITORY_MEMORY_APIXU"
+        const val REPOSITORY_MEMORY_OPENWEATHER     = "REPOSITORY_MEMORY_OPENWEATHER"
     }
 }

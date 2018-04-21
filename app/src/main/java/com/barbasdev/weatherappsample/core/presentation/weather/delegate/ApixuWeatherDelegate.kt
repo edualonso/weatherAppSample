@@ -16,6 +16,8 @@ data class ApixuWeatherDelegate(
 
     override val lastUpdated: Long
         get() = syncTime
+    override val temperature: Float
+        get() = weather.current.tempC?.toFloat() ?: -666F
     override val location: LocationImpl
         get() = LocationImpl(ApixuLocationDelegate(weather.location))
 
