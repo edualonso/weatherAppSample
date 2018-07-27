@@ -1,7 +1,7 @@
 package com.barbasdev.weatherappsample.core.persistence.memory
 
 import android.util.Log
-import com.barbasdev.weatherappsample.core.network.ApiClientImpl
+import com.barbasdev.weatherappsample.core.network.ApiClient
 import com.barbasdev.weatherappsample.core.persistence.Repository
 import com.barbasdev.weatherappsample.core.presentation.weather.Weather
 import io.reactivex.Observable
@@ -11,7 +11,7 @@ import io.reactivex.Single
  *
  */
 class MemoryRepositoryDelegate(
-        private val apiClient: ApiClientImpl
+        private val apiClient: ApiClient
 ) : Repository {
 
     private val weatherCache = mutableListOf<Weather>()

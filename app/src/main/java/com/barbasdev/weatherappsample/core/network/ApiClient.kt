@@ -11,11 +11,3 @@ interface ApiClient {
     fun getLocation(location: String): Single<List<Location>>
     fun getWeather(location: String): Single<Weather>
 }
-
-
-/**
- *
- */
-class ApiClientImpl(
-        private val delegate: ApiClient
-) : ApiClient by delegate

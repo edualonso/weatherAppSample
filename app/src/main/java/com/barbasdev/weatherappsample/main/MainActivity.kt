@@ -18,9 +18,17 @@ class MainActivity : BaseActivity() {
 //    @field:Named(RepositoryModule.REPOSITORY_MEMORY_APIXU)
 //    lateinit var memoryRepository: Repository
 
+//    @Inject
+//    @field:Named(RepositoryModule.REPOSITORY_MEMORY_OPENWEATHER)
+//    lateinit var memoryRepository: Repository
+
+//    @Inject
+//    @field:Named(RepositoryModule.REPOSITORY_ROOM_OPENWEATHER)
+//    lateinit var roomRepository: Repository
+
     @Inject
-    @field:Named(RepositoryModule.REPOSITORY_MEMORY_OPENWEATHER)
-    lateinit var memoryRepository: Repository
+    @field:Named(RepositoryModule.REPOSITORY_ROOM_APIXU)
+    lateinit var roomRepository: Repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +41,9 @@ class MainActivity : BaseActivity() {
     }
 
     private fun fetchWeather() {
-        memoryRepository
-                .getWeather("madrid")
+//        memoryRepository
+        roomRepository
+                .getWeather("Madrid")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError {

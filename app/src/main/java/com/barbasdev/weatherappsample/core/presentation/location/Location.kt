@@ -11,9 +11,14 @@ interface Location {
     val lon: Float
 }
 
+
 /**
  *
  */
-data class LocationImpl(
-        private val delegate: Location
-) : Location by delegate
+data class StorableLocation(
+        override val id: Long,
+        override val name: String,
+        override val country: String,
+        override val lat: Float,
+        override val lon: Float
+) : Location

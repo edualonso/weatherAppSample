@@ -1,9 +1,10 @@
 package com.barbasdev.weatherappsample.di.modules
 
-import com.barbasdev.weatherappsample.core.network.ApiClientImpl
+import com.barbasdev.weatherappsample.core.network.ApiClient
 import com.barbasdev.weatherappsample.core.persistence.Repository
-import com.barbasdev.weatherappsample.core.persistence.RepositoryImpl
 import com.barbasdev.weatherappsample.core.persistence.memory.MemoryRepositoryDelegate
+import com.barbasdev.weatherappsample.core.persistence.room.RoomRepositoryDelegate
+import com.barbasdev.weatherappsample.core.persistence.room.WeatherDao
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -15,25 +16,50 @@ import javax.inject.Singleton
 @Module
 class RepositoryModule {
 
+    // MEMORY REPOS
+
     @Provides
     @Named(REPOSITORY_MEMORY_APIXU)
     @Singleton
     fun providesMemoryRepositoryApixu(
-            @Named(NetworkModule.APIXU_API_CLIENT) apiClient: ApiClientImpl
+            @Named(NetworkModule.APIXU_API_CLIENT) apiClient: ApiClient
     ): Repository =
-            RepositoryImpl(MemoryRepositoryDelegate(apiClient))
+            MemoryRepositoryDelegate(apiClient)
 
     @Provides
     @Named(REPOSITORY_MEMORY_OPENWEATHER)
     @Singleton
     fun providesMemoryRepositoryOpenWeather(
-            @Named(NetworkModule.OPENWEATHER_API_CLIENT) apiClient: ApiClientImpl
+            @Named(NetworkModule.OPENWEATHER_API_CLIENT) apiClient: ApiClient
     ): Repository =
-            RepositoryImpl(MemoryRepositoryDelegate(apiClient))
+            MemoryRepositoryDelegate(apiClient)
+
+
+    // ROOM REPOS
+
+    @Provides
+    @Named(REPOSITORY_ROOM_APIXU)
+    @Singleton
+    fun providesRoomRepositoryApixu(
+            @Named(NetworkModule.APIXU_API_CLIENT) apiClient: ApiClient,
+            weatherDao: WeatherDao
+    ): Repository =
+            RoomRepositoryDelegate(apiClient, weatherDao)
+
+    @Provides
+    @Named(REPOSITORY_ROOM_OPENWEATHER)
+    @Singleton
+    fun providesRoomRepositoryOpenWeather(
+            @Named(NetworkModule.OPENWEATHER_API_CLIENT) apiClient: ApiClient,
+            weatherDao: WeatherDao
+    ): Repository =
+            RoomRepositoryDelegate(apiClient, weatherDao)
 
 
     companion object {
         const val REPOSITORY_MEMORY_APIXU           = "REPOSITORY_MEMORY_APIXU"
         const val REPOSITORY_MEMORY_OPENWEATHER     = "REPOSITORY_MEMORY_OPENWEATHER"
+        const val REPOSITORY_ROOM_APIXU             = "REPOSITORY_ROOM_APIXU"
+        const val REPOSITORY_ROOM_OPENWEATHER       = "REPOSITORY_ROOM_OPENWEATHER"
     }
 }

@@ -9,11 +9,3 @@ import io.reactivex.Single
 interface Repository {
     fun getWeather(location: String): Single<Weather>
 }
-
-
-/**
- *
- */
-class RepositoryImpl(
-        private val delegate: Repository
-) : Repository by delegate

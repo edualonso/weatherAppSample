@@ -1,7 +1,7 @@
 package com.barbasdev.weatherappsample.core.network.apixu
 
 import com.barbasdev.weatherappsample.base.TestApplication
-import com.barbasdev.weatherappsample.core.network.ApiClientImpl
+import com.barbasdev.weatherappsample.core.network.ApiClient
 import com.barbasdev.weatherappsample.di.module.TestNetworkConstModule
 import com.barbasdev.weatherappsample.di.modules.NetworkModule
 import junit.framework.Assert
@@ -21,7 +21,7 @@ class ApixuApiClientDelegateTest {
 
     @Inject
     @field:Named(NetworkModule.APIXU_API_CLIENT)
-    lateinit var apixuApiClient: ApiClientImpl
+    lateinit var apixuApiClient: ApiClient
 
     private lateinit var server: MockWebServer
 
@@ -72,12 +72,12 @@ class ApixuApiClientDelegateTest {
                 .await()
                 .values()[0]
 
-        assertEquals(weather.lastUpdated, 1519338644L)
-        assertEquals(weather.location.id, 0)
-        assertEquals(weather.location.name, "London")
-        assertEquals(weather.location.country, "United Kingdom")
-        assertEquals(weather.location.lat, 51.52F)
-        assertEquals(weather.location.lon, -0.11F)
+        assertEquals(1519338644L, weather.lastUpdated)
+        assertEquals(0, weather.location.id)
+        assertEquals("London", weather.location.name)
+        assertEquals("United Kingdom", weather.location.country)
+        assertEquals(51.52F, weather.location.lat)
+        assertEquals(-0.11F, weather.location.lon)
     }
 
     object JSON {
@@ -178,7 +178,7 @@ class ApixuApiClientDelegateTest {
 """
 
         const val RESPONSE_WEATHER =
-"""
+                """
 {
     "location": {
         "name": "London",
