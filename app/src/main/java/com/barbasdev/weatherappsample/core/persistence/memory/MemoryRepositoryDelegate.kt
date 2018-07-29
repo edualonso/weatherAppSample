@@ -3,6 +3,7 @@ package com.barbasdev.weatherappsample.core.persistence.memory
 import android.util.Log
 import com.barbasdev.weatherappsample.core.network.ApiClient
 import com.barbasdev.weatherappsample.core.persistence.Repository
+import com.barbasdev.weatherappsample.core.persistence.Repository.Companion.EXPIRATION_TIME
 import com.barbasdev.weatherappsample.core.presentation.weather.Weather
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -29,7 +30,7 @@ class MemoryRepositoryDelegate(
                         it.location.name.contains(location, true)
                     }.apply {
                         if (this != null) {
-                            if (System.currentTimeMillis() - lastUpdated < 60000) {
+                            if (System.currentTimeMillis() - lastUpdated < EXPIRATION_TIME) {
                                 Log.e("------------------", "-----------> WEATHER FETCHED FROM THE CACHE")
                                 it.onNext(this)
                             } else {

@@ -1,5 +1,7 @@
 package com.barbasdev.weatherappsample.core.presentation.location
 
+import io.realm.RealmObject
+
 /**
  *
  */
@@ -15,10 +17,10 @@ interface Location {
 /**
  *
  */
-data class StorableLocation(
-        override val id: Long,
-        override val name: String,
-        override val country: String,
-        override val lat: Float,
-        override val lon: Float
-) : Location
+open class StorableLocation(
+        override var id: Long = 0,
+        override var name: String = "",
+        override var country: String = "",
+        override var lat: Float = 0f,
+        override var lon: Float = 0f
+) : Location, RealmObject()

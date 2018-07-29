@@ -5,6 +5,7 @@ import android.arch.persistence.room.PrimaryKey
 import com.barbasdev.weatherappsample.core.presentation.location.Location
 import com.barbasdev.weatherappsample.core.presentation.location.StorableLocation
 import com.barbasdev.weatherappsample.core.presentation.weather.Weather
+import io.realm.RealmObject
 
 @Entity(tableName = "weather")
 data class WeatherRoomDelegate(

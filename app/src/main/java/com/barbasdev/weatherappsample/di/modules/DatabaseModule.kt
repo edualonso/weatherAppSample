@@ -6,6 +6,7 @@ import com.barbasdev.weatherappsample.core.persistence.room.AppRoomDatabase
 import com.barbasdev.weatherappsample.core.persistence.room.WeatherDao
 import dagger.Module
 import dagger.Provides
+import io.realm.Realm
 import io.realm.RealmConfiguration
 
 
@@ -25,15 +26,11 @@ class DatabaseModule {
     }
 
     @Provides
-    fun providesRoom(context: Context): AppRoomDatabase {
+    fun providesWeatherDao(context: Context): WeatherDao {
         return Room
                 .databaseBuilder(context, AppRoomDatabase::class.java, "weatherAppRoomDatabase")
                 .build()
-    }
-
-    @Provides
-    fun providesWeatherDao(roomDatabase: AppRoomDatabase): WeatherDao {
-        return roomDatabase.weatherDao()
+                .weatherDao()
     }
 
 

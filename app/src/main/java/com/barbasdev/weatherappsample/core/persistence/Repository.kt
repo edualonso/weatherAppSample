@@ -8,4 +8,9 @@ import io.reactivex.Single
  */
 interface Repository {
     fun getWeather(location: String): Single<Weather>
+
+
+    companion object {
+        const val EXPIRATION_TIME = 20000
+    }
 }

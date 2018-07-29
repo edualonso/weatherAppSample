@@ -17,7 +17,7 @@ data class OpenWeatherWeatherDelegate(
     private val syncTime = System.currentTimeMillis()
 
     override val lastUpdated: Long
-        get() = weather.dt ?: syncTime
+        get() = syncTime
     override val temperature: Float
         get() = weather.main?.temp ?: -666F
     override val location: Location
