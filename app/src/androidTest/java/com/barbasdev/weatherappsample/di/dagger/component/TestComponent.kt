@@ -1,4 +1,4 @@
-package com.barbasdev.weatherappsample.di.component
+package com.barbasdev.weatherappsample.di.dagger.component
 
 import com.barbasdev.weatherappsample.base.TestApplication
 import com.barbasdev.weatherappsample.base.WeatherApplication
@@ -7,7 +7,7 @@ import com.barbasdev.weatherappsample.core.network.openweather.OpenWeatherApiCli
 import com.barbasdev.weatherappsample.core.persistence.memory.MemoryRepositoryDelegateTest
 import com.barbasdev.weatherappsample.core.persistence.room.RoomRepositoryDelegateTest
 import com.barbasdev.weatherappsample.di.module.TestNetworkConstModule
-import com.barbasdev.weatherappsample.di.modules.*
+import com.barbasdev.weatherappsample.di.dagger.modules.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule

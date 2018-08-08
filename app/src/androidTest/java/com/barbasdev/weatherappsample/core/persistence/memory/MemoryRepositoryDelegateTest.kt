@@ -4,7 +4,7 @@ import com.barbasdev.weatherappsample.base.TestApplication
 import com.barbasdev.weatherappsample.core.network.apixu.ApixuApiClientDelegateTest
 import com.barbasdev.weatherappsample.core.persistence.Repository
 import com.barbasdev.weatherappsample.di.module.TestNetworkConstModule
-import com.barbasdev.weatherappsample.di.modules.RepositoryModule
+import com.barbasdev.weatherappsample.di.dagger.modules.RepositoryModule
 import junit.framework.Assert.assertEquals
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer

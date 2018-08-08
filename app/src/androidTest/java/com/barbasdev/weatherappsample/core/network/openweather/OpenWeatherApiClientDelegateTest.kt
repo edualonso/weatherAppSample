@@ -3,7 +3,7 @@ package com.barbasdev.weatherappsample.core.network.openweather
 import com.barbasdev.weatherappsample.base.TestApplication
 import com.barbasdev.weatherappsample.core.network.ApiClient
 import com.barbasdev.weatherappsample.di.module.TestNetworkConstModule
-import com.barbasdev.weatherappsample.di.modules.NetworkModule
+import com.barbasdev.weatherappsample.di.dagger.modules.NetworkModule
 import junit.framework.Assert
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer

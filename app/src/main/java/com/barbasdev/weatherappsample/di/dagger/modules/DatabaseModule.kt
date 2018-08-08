@@ -1,4 +1,4 @@
-package com.barbasdev.weatherappsample.di.modules
+package com.barbasdev.weatherappsample.di.dagger.modules
 
 import android.arch.persistence.room.Room
 import android.content.Context
@@ -6,7 +6,6 @@ import com.barbasdev.weatherappsample.core.persistence.room.AppRoomDatabase
 import com.barbasdev.weatherappsample.core.persistence.room.WeatherDao
 import dagger.Module
 import dagger.Provides
-import io.realm.Realm
 import io.realm.RealmConfiguration
 
 

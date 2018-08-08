@@ -1,4 +1,4 @@
-package com.barbasdev.weatherappsample.di.modules
+package com.barbasdev.weatherappsample.di.dagger.modules
 
 import android.content.Context
 import android.content.res.AssetManager

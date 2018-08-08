@@ -1,4 +1,4 @@
-package com.barbasdev.weatherappsample.di.modules
+package com.barbasdev.weatherappsample.di.dagger.modules
 
 import com.barbasdev.weatherappsample.BuildConfig
 import com.barbasdev.weatherappsample.core.network.ApiClient
@@ -68,34 +68,6 @@ class NetworkModule {
             delegate
 
 
-    //--------------------------------------------------------------------------------
-    // Private stuff
-    //--------------------------------------------------------------------------------
-
-    private fun getHttpLoggingInterceptor(): HttpLoggingInterceptor {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        when {
-            BuildConfig.DEBUG -> loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-            else -> loggingInterceptor.level = HttpLoggingInterceptor.Level.NONE
-        }
-        return loggingInterceptor
-    }
-
-    private fun <T : ApiKeyInterceptor> getRetrofit(
-            baseUrl: String,
-            apiKeyInterceptor: T
-    ): Retrofit {
-        return Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(OkHttpClient.Builder()
-                        .addInterceptor(getHttpLoggingInterceptor())
-                        .addInterceptor(apiKeyInterceptor)
-                        .build())
-                .build()
-    }
-
     companion object {
         const val APIXU_BASE_URL = "APIXU_BASE_URL"
         const val APIXU_API_KEY = "key"
@@ -105,5 +77,28 @@ class NetworkModule {
         const val OPENWEATHER_API_KEY = "appid"
         const val OPENWEATHER_API_CLIENT = "openweather"
 
+        private fun getHttpLoggingInterceptor(): HttpLoggingInterceptor {
+            val loggingInterceptor = HttpLoggingInterceptor()
+            when {
+                BuildConfig.DEBUG -> loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+                else -> loggingInterceptor.level = HttpLoggingInterceptor.Level.NONE
+            }
+            return loggingInterceptor
+        }
+
+        fun <T : ApiKeyInterceptor> getRetrofit(
+                baseUrl: String,
+                apiKeyInterceptor: T
+        ): Retrofit {
+            return Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(OkHttpClient.Builder()
+                            .addInterceptor(getHttpLoggingInterceptor())
+                            .addInterceptor(apiKeyInterceptor)
+                            .build())
+                    .build()
+        }
     }
 }

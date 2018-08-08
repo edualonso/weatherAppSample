@@ -1,4 +1,4 @@
-package com.barbasdev.weatherappsample.di.modules
+package com.barbasdev.weatherappsample.di.dagger.modules
 
 import dagger.Module
 

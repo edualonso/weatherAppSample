@@ -1,7 +1,7 @@
 package com.barbasdev.weatherappsample.base
 
-import com.barbasdev.weatherappsample.di.component.DaggerTestComponent
-import com.barbasdev.weatherappsample.di.component.TestComponent
+import com.barbasdev.weatherappsample.di.dagger.component.DaggerTestComponent
+import com.barbasdev.weatherappsample.di.dagger.component.TestComponent
 
 /**
  *

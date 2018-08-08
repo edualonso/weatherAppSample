@@ -1,7 +1,7 @@
-package com.barbasdev.weatherappsample.di.component
+package com.barbasdev.weatherappsample.di.dagger.component
 
 import com.barbasdev.weatherappsample.base.WeatherApplication
-import com.barbasdev.weatherappsample.di.modules.*
+import com.barbasdev.weatherappsample.di.dagger.modules.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule

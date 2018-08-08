@@ -2,13 +2,14 @@ package com.barbasdev.weatherappsample.base
 
 import android.app.Activity
 import android.support.multidex.MultiDexApplication
-import com.barbasdev.weatherappsample.di.component.ApplicationComponent
-import com.barbasdev.weatherappsample.di.component.DaggerApplicationComponent
+import com.barbasdev.weatherappsample.di.dagger.component.ApplicationComponent
+import com.barbasdev.weatherappsample.di.dagger.component.DaggerApplicationComponent
+import com.barbasdev.weatherappsample.di.koin.Modules
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import io.realm.Realm
-import io.realm.RealmConfiguration
+import org.koin.android.ext.android.startKoin
 import javax.inject.Inject
 
 /**
@@ -17,7 +18,6 @@ import javax.inject.Inject
 open class WeatherApplication : MultiDexApplication(), HasActivityInjector {
 
     @Inject lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
-    @Inject lateinit var realmConfiguration: RealmConfiguration
 
     override fun onCreate() {
         super.onCreate()
@@ -36,12 +36,23 @@ open class WeatherApplication : MultiDexApplication(), HasActivityInjector {
      * Override in custom application test class.
      */
     open fun init() {
+        // dagger
         applicationComponent = DaggerApplicationComponent
                 .builder()
                 .applicationContext(this)
                 .build()
         applicationComponent.inject(this)
+
+        // koin
+        val modules = listOf(
+                Modules.networkConstModule,
+                Modules.networkModule,
+                Modules.databaseModule,
+                Modules.repositoryModule
+        )
+        startKoin(this, modules)
     }
+
 
     companion object {
         internal lateinit var applicationComponent: ApplicationComponent

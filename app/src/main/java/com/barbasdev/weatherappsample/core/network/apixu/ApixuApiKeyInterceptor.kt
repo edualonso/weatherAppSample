@@ -1,7 +1,7 @@
 package com.barbasdev.weatherappsample.core.network.apixu
 
 import com.barbasdev.weatherappsample.core.network.ApiKeyInterceptor
-import com.barbasdev.weatherappsample.di.modules.NetworkModule
+import com.barbasdev.weatherappsample.di.dagger.modules.NetworkModule
 
 /**
  *
