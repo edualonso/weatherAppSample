@@ -5,17 +5,21 @@ import com.barbasdev.weatherappsample.core.network.openweather.dto.OpenWeatherLo
 import com.barbasdev.weatherappsample.core.network.openweather.dto.OpenWeatherWeatherResult
 import com.barbasdev.weatherappsample.core.presentation.location.Location
 import com.barbasdev.weatherappsample.core.presentation.location.delegate.OpenWeatherLocationDelegate
-import com.barbasdev.weatherappsample.core.presentation.weather.IWeather
+import com.barbasdev.weatherappsample.core.presentation.weather.Weather
 
 /**
  *
  */
 data class OpenWeatherWeatherDelegate(
         private val weather: OpenWeatherWeatherResult
-) : IWeather {
+) : Weather {
+
+    private val syncTime = System.currentTimeMillis()
 
     override val lastUpdated: Long
-        get() = weather.dt ?: System.currentTimeMillis()
+        get() = syncTime
+    override val temperature: Float
+        get() = weather.main?.temp ?: -666F
     override val location: Location
         get() {
             with(weather) {
@@ -25,7 +29,7 @@ data class OpenWeatherWeatherDelegate(
                         sys.country,
                         OpenWeatherCoord(coord.lat ?: 0F, coord.lon ?: 0F)
                 )
-                return Location(OpenWeatherLocationDelegate(openWeatherLocation))
+                return OpenWeatherLocationDelegate(openWeatherLocation)
             }
         }
 

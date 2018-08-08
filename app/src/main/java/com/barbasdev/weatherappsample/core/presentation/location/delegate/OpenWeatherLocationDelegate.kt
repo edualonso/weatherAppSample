@@ -1,14 +1,14 @@
 package com.barbasdev.weatherappsample.core.presentation.location.delegate
 
 import com.barbasdev.weatherappsample.core.network.openweather.dto.OpenWeatherLocation
-import com.barbasdev.weatherappsample.core.presentation.location.ILocation
+import com.barbasdev.weatherappsample.core.presentation.location.Location
 
 /**
  * Created by edu on 23/02/2018.
  */
 data class OpenWeatherLocationDelegate(
         private val location: OpenWeatherLocation
-) : ILocation {
+) : Location {
 
     override val id: Long
         get() = location.id

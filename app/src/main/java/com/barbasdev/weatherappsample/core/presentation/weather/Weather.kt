@@ -5,18 +5,12 @@ import com.barbasdev.weatherappsample.core.presentation.location.Location
 /**
  *
  */
-interface IWeather {
+interface Weather {
     val lastUpdated: Long
+    val temperature: Float
     val location: Location
 
     companion object {
         const val NO_COORDS_VALUE = -1F
     }
 }
-
-/**
- *
- */
-data class Weather(
-        private val delegate: IWeather
-) : IWeather by delegate

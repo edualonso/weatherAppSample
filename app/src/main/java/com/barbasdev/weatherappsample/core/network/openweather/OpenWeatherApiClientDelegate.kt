@@ -1,6 +1,6 @@
 package com.barbasdev.weatherappsample.core.network.openweather
 
-import com.barbasdev.weatherappsample.core.network.IApiClient
+import com.barbasdev.weatherappsample.core.network.ApiClient
 import com.barbasdev.weatherappsample.core.network.openweather.dto.OpenWeatherCoord
 import com.barbasdev.weatherappsample.core.network.openweather.dto.OpenWeatherLocation
 import com.barbasdev.weatherappsample.core.presentation.location.Location
@@ -15,25 +15,26 @@ import javax.inject.Inject
  */
 class OpenWeatherApiClientDelegate @Inject constructor(
         private val service: OpenWeatherService
-) : IApiClient {
+) : ApiClient {
 
     override fun getLocation(location: String): Single<List<Location>> {
-        return Single.fromCallable {
-            mutableListOf<Location>().apply {
-                val delegate = OpenWeatherLocationDelegate(OpenWeatherLocation(42,
-                        "42-CITY",
-                        "42-COUNTRY",
-                        OpenWeatherCoord(42.42F, -42.42F)))
-                add(Location(delegate))
-            }
-        }
+        return Single
+                .fromCallable {
+                    listOf<OpenWeatherLocationDelegate>()
+                            .plus(OpenWeatherLocationDelegate(
+                                    OpenWeatherLocation(42,
+                                            "42-CITY",
+                                            "42-COUNTRY",
+                                            OpenWeatherCoord(42.42F, -42.42F)
+                            )))
+                }
     }
 
     override fun getWeather(location: String): Single<Weather> {
         return service
                 .getWeather(location)
                 .map {
-                    Weather(OpenWeatherWeatherDelegate(it))
+                    OpenWeatherWeatherDelegate(it)
                 }
     }
 

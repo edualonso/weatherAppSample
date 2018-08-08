@@ -1,31 +1,32 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        kotlin_version = '1.2.21'
-        support_library = '26.1.0'
-        multidex = '1.0.2'
+        kotlin_version = '1.2.50'
+        support_library = '27.1.1'
+        multidex = '1.0.3'
         databinding_compiler = '3.0.1'
-        constraint_layout = '1.0.2'
+        constraint_layout = '1.1.2'
         junit = '4.12'
         android_test_runner = '1.0.1'
         android_test_espresso = '3.0.1'
-        arch = '1.1.0'
+        arch = '1.1.1'
         rxjava = '2.1.7'
-        rxandroid = '2.0.1'
+        rxandroid = '2.0.2'
         rxbinding = '2.0.0'
         retrofit = '2.3.0'
         okhttp = '3.9.1'
-        dagger = '2.14.1'
+        dagger = '2.16'
+        room = '1.1.1'
     }
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.3.0-alpha03'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
-        classpath "io.realm:realm-gradle-plugin:4.3.1"
+        classpath "io.realm:realm-gradle-plugin:5.4.0"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

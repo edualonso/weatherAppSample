@@ -1,8 +1,8 @@
 package com.barbasdev.weatherappsample.di.modules
 
 import com.barbasdev.weatherappsample.BuildConfig
-import com.barbasdev.weatherappsample.core.network.ApiKeyInterceptor
 import com.barbasdev.weatherappsample.core.network.ApiClient
+import com.barbasdev.weatherappsample.core.network.ApiKeyInterceptor
 import com.barbasdev.weatherappsample.core.network.apixu.ApixuApiKeyInterceptor
 import com.barbasdev.weatherappsample.core.network.apixu.ApixuApiClientDelegate
 import com.barbasdev.weatherappsample.core.network.apixu.ApixuWeatherService
@@ -59,13 +59,13 @@ class NetworkModule {
     @Named(APIXU_API_CLIENT)
     @Singleton
     fun providesApixuApiClient(delegate: ApixuApiClientDelegate): ApiClient =
-            ApiClient(delegate)
+            delegate
 
     @Provides
     @Named(OPENWEATHER_API_CLIENT)
     @Singleton
     fun providesOpenWeatherApiClient(delegate: OpenWeatherApiClientDelegate): ApiClient =
-            ApiClient(delegate)
+            delegate
 
 
     //--------------------------------------------------------------------------------
