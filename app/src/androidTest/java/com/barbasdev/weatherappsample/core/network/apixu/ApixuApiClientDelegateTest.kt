@@ -72,7 +72,6 @@ class ApixuApiClientDelegateTest {
                 .await()
                 .values()[0]
 
-        assertEquals(1519338644L, weather.lastUpdated)
         assertEquals(0, weather.location.id)
         assertEquals("London", weather.location.name)
         assertEquals("United Kingdom", weather.location.country)

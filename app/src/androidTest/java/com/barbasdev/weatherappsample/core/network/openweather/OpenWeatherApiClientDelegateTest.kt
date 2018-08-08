@@ -54,7 +54,6 @@ class OpenWeatherApiClientDelegateTest {
                 .await()
                 .values()[0]
 
-        Assert.assertEquals(weather.lastUpdated, 1485789600L)
         Assert.assertEquals(weather.location.id, 2643743L)
         Assert.assertEquals(weather.location.name, "London")
         Assert.assertEquals(weather.location.country, "GB")
