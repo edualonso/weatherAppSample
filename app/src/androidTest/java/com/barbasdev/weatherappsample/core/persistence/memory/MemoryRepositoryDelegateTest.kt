@@ -5,6 +5,7 @@ import com.barbasdev.weatherappsample.core.network.apixu.ApixuApiClientDelegateT
 import com.barbasdev.weatherappsample.core.network.openweather.OpenWeatherApiClientDelegateTest
 import com.barbasdev.weatherappsample.core.persistence.Repository
 import com.barbasdev.weatherappsample.core.persistence.WeatherResultsTestHelper
+import com.barbasdev.weatherappsample.di.RepositoryConstants
 import com.barbasdev.weatherappsample.di.dagger.modules.RepositoryModule
 import com.barbasdev.weatherappsample.di.dagger.modules.TestNetworkConstModule
 import junit.framework.Assert.assertEquals
@@ -25,17 +26,17 @@ class MemoryRepositoryDelegateTest : KoinTest {
 
     // dagger
     @Inject
-    @field:Named(RepositoryModule.REPOSITORY_MEMORY_APIXU)
+    @field:Named(RepositoryConstants.REPOSITORY_MEMORY_APIXU)
     lateinit var daggerApixuMemoryRepository: Repository
 
     @Inject
-    @field:Named(RepositoryModule.REPOSITORY_MEMORY_OPENWEATHER)
+    @field:Named(RepositoryConstants.REPOSITORY_MEMORY_OPENWEATHER)
     lateinit var daggerOpenWeatherMemoryRepository: Repository
 
 
     // koin
-    private val koinApixuMemoryRepository: Repository by inject(RepositoryModule.REPOSITORY_MEMORY_APIXU)
-    private val koinOpenWeatherMemoryRepository: Repository by inject(RepositoryModule.REPOSITORY_MEMORY_OPENWEATHER)
+    private val koinApixuMemoryRepository: Repository by inject(RepositoryConstants.REPOSITORY_MEMORY_APIXU)
+    private val koinOpenWeatherMemoryRepository: Repository by inject(RepositoryConstants.REPOSITORY_MEMORY_OPENWEATHER)
 
 
     private lateinit var server: MockWebServer

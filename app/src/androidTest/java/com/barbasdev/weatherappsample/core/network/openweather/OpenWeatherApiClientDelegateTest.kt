@@ -2,6 +2,7 @@ package com.barbasdev.weatherappsample.core.network.openweather
 
 import com.barbasdev.weatherappsample.base.TestApplication
 import com.barbasdev.weatherappsample.core.network.ApiClient
+import com.barbasdev.weatherappsample.di.NetworkConstants
 import com.barbasdev.weatherappsample.di.dagger.modules.NetworkModule
 import com.barbasdev.weatherappsample.di.dagger.modules.TestNetworkConstModule
 import junit.framework.Assert
@@ -22,12 +23,12 @@ class OpenWeatherApiClientDelegateTest : KoinTest {
 
     // dagger
     @Inject
-    @field:Named(NetworkModule.OPENWEATHER_API_CLIENT)
+    @field:Named(NetworkConstants.OPENWEATHER_API_CLIENT)
     lateinit var daggerOpenWeatherApiClient: ApiClient
 
 
     // koin
-    private val koinOpenWeatherApiClient: ApiClient by inject(NetworkModule.OPENWEATHER_API_CLIENT)
+    private val koinOpenWeatherApiClient: ApiClient by inject(NetworkConstants.OPENWEATHER_API_CLIENT)
 
 
     private lateinit var server: MockWebServer

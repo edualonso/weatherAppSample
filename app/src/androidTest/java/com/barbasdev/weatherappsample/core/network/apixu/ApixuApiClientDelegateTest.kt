@@ -2,6 +2,7 @@ package com.barbasdev.weatherappsample.core.network.apixu
 
 import com.barbasdev.weatherappsample.base.TestApplication
 import com.barbasdev.weatherappsample.core.network.ApiClient
+import com.barbasdev.weatherappsample.di.NetworkConstants
 import com.barbasdev.weatherappsample.di.dagger.modules.NetworkModule
 import com.barbasdev.weatherappsample.di.dagger.modules.TestNetworkConstModule
 import junit.framework.Assert
@@ -23,12 +24,12 @@ class ApixuApiClientDelegateTest : KoinTest {
 
     // dagger
     @Inject
-    @field:Named(NetworkModule.APIXU_API_CLIENT)
+    @field:Named(NetworkConstants.APIXU_API_CLIENT)
     lateinit var daggerApixuApiClient: ApiClient
 
 
     // koin
-    private val koinApixuApiClient: ApiClient by inject(NetworkModule.APIXU_API_CLIENT)
+    private val koinApixuApiClient: ApiClient by inject(NetworkConstants.APIXU_API_CLIENT)
 
 
     private lateinit var server: MockWebServer

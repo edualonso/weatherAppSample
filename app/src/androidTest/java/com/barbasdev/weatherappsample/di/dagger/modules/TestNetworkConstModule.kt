@@ -1,5 +1,6 @@
 package com.barbasdev.weatherappsample.di.dagger.modules
 
+import com.barbasdev.weatherappsample.di.NetworkConstants
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -11,22 +12,22 @@ import javax.inject.Named
 class TestNetworkConstModule {
 
     @Provides
-    @Named(NetworkModule.APIXU_BASE_URL)
+    @Named(NetworkConstants.APIXU_BASE_URL)
     fun providesApixuBaseUrl(): String =
             "http://localhost:$SERVER_PORT/"
 
     @Provides
-    @Named(NetworkModule.APIXU_API_KEY)
+    @Named(NetworkConstants.APIXU_API_KEY)
     fun providesApixuApiKey(): String =
             "11682c59698444f6b59160534171912"
 
     @Provides
-    @Named(NetworkModule.OPENWEATHER_BASE_URL)
+    @Named(NetworkConstants.OPENWEATHER_BASE_URL)
     fun providesOpenweatherBaseUrl(): String =
             "http://localhost:$SERVER_PORT/"
 
     @Provides
-    @Named(NetworkModule.OPENWEATHER_API_KEY)
+    @Named(NetworkConstants.OPENWEATHER_API_KEY)
     fun providesOpenWeatherApiKey(): String =
             "75805b09ea06260c9eb71391b785f444"
 

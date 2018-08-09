@@ -24,7 +24,7 @@ class TestApplication : WeatherApplication() {
                 TestModules.networkTestConstModule,
                 Modules.networkModule,
                 TestModules.databaseTestModule,
-                TestModules.repositoryTestModule
+                Modules.repositoryModule
         )
         startKoin(this, modules)
     }

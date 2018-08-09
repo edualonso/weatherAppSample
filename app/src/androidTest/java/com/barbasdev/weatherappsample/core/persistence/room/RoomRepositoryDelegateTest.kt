@@ -5,15 +5,12 @@ import com.barbasdev.weatherappsample.core.network.apixu.ApixuApiClientDelegateT
 import com.barbasdev.weatherappsample.core.network.openweather.OpenWeatherApiClientDelegateTest
 import com.barbasdev.weatherappsample.core.persistence.Repository
 import com.barbasdev.weatherappsample.core.persistence.WeatherResultsTestHelper
-import com.barbasdev.weatherappsample.di.dagger.modules.DatabaseModule
-import com.barbasdev.weatherappsample.di.dagger.modules.RepositoryModule
+import com.barbasdev.weatherappsample.di.RepositoryConstants
 import com.barbasdev.weatherappsample.di.dagger.modules.TestNetworkConstModule
-import junit.framework.Assert
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.koin.standalone.inject
 import org.koin.test.KoinTest
@@ -24,17 +21,17 @@ class RoomRepositoryDelegateTest : KoinTest {
 
     // dagger
     @Inject
-    @field:Named(RepositoryModule.REPOSITORY_ROOM_APIXU)
+    @field:Named(RepositoryConstants.REPOSITORY_ROOM_APIXU)
     lateinit var daggerApixuRoomRepository: Repository
 
     @Inject
-    @field:Named(RepositoryModule.REPOSITORY_ROOM_OPENWEATHER)
+    @field:Named(RepositoryConstants.REPOSITORY_ROOM_OPENWEATHER)
     lateinit var daggerOpenWeatherRoomRepository: Repository
 
 
     // koin
-    private val koinApixuRoomRepository: Repository by inject(RepositoryModule.REPOSITORY_ROOM_APIXU)
-    private val koinOpenWeatherRoomRepository: Repository by inject(RepositoryModule.REPOSITORY_ROOM_OPENWEATHER)
+    private val koinApixuRoomRepository: Repository by inject(RepositoryConstants.REPOSITORY_ROOM_APIXU)
+    private val koinOpenWeatherRoomRepository: Repository by inject(RepositoryConstants.REPOSITORY_ROOM_OPENWEATHER)
 
 
     private lateinit var server: MockWebServer
