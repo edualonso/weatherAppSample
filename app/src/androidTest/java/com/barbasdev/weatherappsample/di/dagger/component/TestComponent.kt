@@ -5,8 +5,8 @@ import com.barbasdev.weatherappsample.base.WeatherApplication
 import com.barbasdev.weatherappsample.core.network.apixu.ApixuApiClientDelegateTest
 import com.barbasdev.weatherappsample.core.network.openweather.OpenWeatherApiClientDelegateTest
 import com.barbasdev.weatherappsample.core.persistence.memory.MemoryRepositoryDelegateTest
+import com.barbasdev.weatherappsample.core.persistence.realm.RealmRepositoryDelegateTest
 import com.barbasdev.weatherappsample.core.persistence.room.RoomRepositoryDelegateTest
-import com.barbasdev.weatherappsample.di.module.TestNetworkConstModule
 import com.barbasdev.weatherappsample.di.dagger.modules.*
 import dagger.BindsInstance
 import dagger.Component
@@ -41,5 +41,6 @@ abstract class TestComponent {
     abstract fun inject(openWeatherApiClientDelegateTest: OpenWeatherApiClientDelegateTest)
     abstract fun inject(memoryRepositoryDelegateTest: MemoryRepositoryDelegateTest)
     abstract fun inject(roomRepositoryDelegateTest: RoomRepositoryDelegateTest)
+    abstract fun inject(realmRepositoryDelegateTest: RealmRepositoryDelegateTest)
 
 }

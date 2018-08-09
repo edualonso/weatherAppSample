@@ -2,25 +2,33 @@ package com.barbasdev.weatherappsample.core.network.openweather
 
 import com.barbasdev.weatherappsample.base.TestApplication
 import com.barbasdev.weatherappsample.core.network.ApiClient
-import com.barbasdev.weatherappsample.di.module.TestNetworkConstModule
 import com.barbasdev.weatherappsample.di.dagger.modules.NetworkModule
+import com.barbasdev.weatherappsample.di.dagger.modules.TestNetworkConstModule
 import junit.framework.Assert
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.koin.standalone.inject
+import org.koin.test.KoinTest
 import javax.inject.Inject
 import javax.inject.Named
 
 /**
  * Created by edu on 22/02/2018.
  */
-class OpenWeatherApiClientDelegateTest {
+class OpenWeatherApiClientDelegateTest : KoinTest {
 
+    // dagger
     @Inject
     @field:Named(NetworkModule.OPENWEATHER_API_CLIENT)
-    lateinit var openWeatherApiClient: ApiClient
+    lateinit var daggerOpenWeatherApiClient: ApiClient
+
+
+    // koin
+    private val koinOpenWeatherApiClient: ApiClient by inject(NetworkModule.OPENWEATHER_API_CLIENT)
+
 
     private lateinit var server: MockWebServer
 
@@ -40,15 +48,19 @@ class OpenWeatherApiClientDelegateTest {
     }
 
     @Test
-    fun getLocation() {
-        // no need to test, locations are fetched from dis
+    fun getWeatherDagger() {
+        server.enqueue(MockResponse().setBody(JSON.RESPONSE_WEATHER))
+        assertWeatherResults(daggerOpenWeatherApiClient)
     }
 
     @Test
-    fun getWeather() {
+    fun getWeatherKoin() {
         server.enqueue(MockResponse().setBody(JSON.RESPONSE_WEATHER))
+        assertWeatherResults(koinOpenWeatherApiClient)
+    }
 
-        val weather = openWeatherApiClient
+    private fun assertWeatherResults(apiClient: ApiClient) {
+        val weather = apiClient
                 .getWeather("AHSDASJDahjsdgas21")
                 .test()
                 .await()
@@ -60,6 +72,7 @@ class OpenWeatherApiClientDelegateTest {
         Assert.assertEquals(weather.location.lat, 51.51F)
         Assert.assertEquals(weather.location.lon, -0.13F)
     }
+
 
     object JSON {
         const val RESPONSE_LOCATION =

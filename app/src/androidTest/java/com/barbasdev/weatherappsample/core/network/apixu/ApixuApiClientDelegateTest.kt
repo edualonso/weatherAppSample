@@ -2,8 +2,8 @@ package com.barbasdev.weatherappsample.core.network.apixu
 
 import com.barbasdev.weatherappsample.base.TestApplication
 import com.barbasdev.weatherappsample.core.network.ApiClient
-import com.barbasdev.weatherappsample.di.module.TestNetworkConstModule
 import com.barbasdev.weatherappsample.di.dagger.modules.NetworkModule
+import com.barbasdev.weatherappsample.di.dagger.modules.TestNetworkConstModule
 import junit.framework.Assert
 import junit.framework.Assert.assertEquals
 import okhttp3.mockwebserver.MockResponse
@@ -11,17 +11,25 @@ import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.koin.standalone.inject
+import org.koin.test.KoinTest
 import javax.inject.Inject
 import javax.inject.Named
 
 /**
  * Created by edu on 22/02/2018.
  */
-class ApixuApiClientDelegateTest {
+class ApixuApiClientDelegateTest : KoinTest {
 
+    // dagger
     @Inject
     @field:Named(NetworkModule.APIXU_API_CLIENT)
-    lateinit var apixuApiClient: ApiClient
+    lateinit var daggerApixuApiClient: ApiClient
+
+
+    // koin
+    private val koinApixuApiClient: ApiClient by inject(NetworkModule.APIXU_API_CLIENT)
+
 
     private lateinit var server: MockWebServer
 
@@ -41,10 +49,31 @@ class ApixuApiClientDelegateTest {
     }
 
     @Test
-    fun getLocation() {
+    fun getLocationDagger() {
         server.enqueue(MockResponse().setBody(JSON.RESPONSE_LOCATION))
+        assertLocationResults(daggerApixuApiClient)
+    }
 
-        val locations = apixuApiClient
+    @Test
+    fun getLocationKoin() {
+        server.enqueue(MockResponse().setBody(JSON.RESPONSE_LOCATION))
+        assertLocationResults(koinApixuApiClient)
+    }
+
+    @Test
+    fun getWeatherDagger() {
+        server.enqueue(MockResponse().setBody(JSON.RESPONSE_WEATHER))
+        assertWeatherResults(daggerApixuApiClient)
+    }
+
+    @Test
+    fun getWeatherKoin() {
+        server.enqueue(MockResponse().setBody(JSON.RESPONSE_WEATHER))
+        assertWeatherResults(koinApixuApiClient)
+    }
+
+    private fun assertLocationResults(apiClient: ApiClient) {
+        val locations = apiClient
                 .getLocation("KAHSDKHEJKHKHASKDHJ")
                 .test()
                 .await()
@@ -62,11 +91,8 @@ class ApixuApiClientDelegateTest {
         Assert.assertEquals("Barrio Pavones, Madrid, Spain", locations[9].name)
     }
 
-    @Test
-    fun getWeather() {
-        server.enqueue(MockResponse().setBody(JSON.RESPONSE_WEATHER))
-
-        val weather = apixuApiClient
+    private fun assertWeatherResults(apiClient: ApiClient) {
+        val weather = apiClient
                 .getWeather("AHSDASJDahjsdgas21")
                 .test()
                 .await()
@@ -78,6 +104,7 @@ class ApixuApiClientDelegateTest {
         assertEquals(51.52F, weather.location.lat)
         assertEquals(-0.11F, weather.location.lon)
     }
+
 
     object JSON {
         const val RESPONSE_LOCATION =

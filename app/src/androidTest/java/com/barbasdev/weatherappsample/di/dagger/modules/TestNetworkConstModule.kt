@@ -1,6 +1,5 @@
-package com.barbasdev.weatherappsample.di.module
+package com.barbasdev.weatherappsample.di.dagger.modules
 
-import com.barbasdev.weatherappsample.di.dagger.modules.NetworkModule
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named

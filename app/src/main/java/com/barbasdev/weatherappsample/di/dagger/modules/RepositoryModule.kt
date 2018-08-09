@@ -44,7 +44,7 @@ class RepositoryModule {
     @Singleton
     fun providesRoomRepositoryApixu(
             @Named(NetworkModule.APIXU_API_CLIENT) apiClient: ApiClient,
-            weatherDao: WeatherDao
+            @Named(DatabaseModule.ROOM_DB_APIXU_DAO_DAGGER) weatherDao: WeatherDao
     ): Repository =
             RoomRepositoryDelegate(apiClient, weatherDao)
 
@@ -53,7 +53,7 @@ class RepositoryModule {
     @Singleton
     fun providesRoomRepositoryOpenWeather(
             @Named(NetworkModule.OPENWEATHER_API_CLIENT) apiClient: ApiClient,
-            weatherDao: WeatherDao
+            @Named(DatabaseModule.ROOM_DB_OPENWEATHER_DAO_DAGGER) weatherDao: WeatherDao
     ): Repository =
             RoomRepositoryDelegate(apiClient, weatherDao)
 
@@ -65,7 +65,7 @@ class RepositoryModule {
     @Singleton
     fun providesRealmRepositoryApixu(
             @Named(NetworkModule.APIXU_API_CLIENT) apiClient: ApiClient,
-            realmConfiguration: RealmConfiguration
+            @Named(DatabaseModule.REALM_DB_APIXU_DAGGER) realmConfiguration: RealmConfiguration
     ): Repository =
             RealmRepositoryDelegate(apiClient, realmConfiguration)
 
@@ -74,7 +74,7 @@ class RepositoryModule {
     @Singleton
     fun providesRealmRepositoryOpenWeather(
             @Named(NetworkModule.OPENWEATHER_API_CLIENT) apiClient: ApiClient,
-            realmConfiguration: RealmConfiguration
+            @Named(DatabaseModule.REALM_DB_OPENWEATHER_DAGGER) realmConfiguration: RealmConfiguration
     ): Repository =
             RealmRepositoryDelegate(apiClient, realmConfiguration)
 

@@ -3,6 +3,7 @@ package com.barbasdev.weatherappsample.main
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import com.barbasdev.weatherappsample.R
 import com.barbasdev.weatherappsample.base.BaseActivity
 import com.barbasdev.weatherappsample.core.persistence.Repository
@@ -19,43 +20,44 @@ import javax.inject.Named
 
 class MainActivity : BaseActivity() {
 
-//    // In-memory repositories
-//    @Inject @field:Named(RepositoryModule.REPOSITORY_MEMORY_APIXU)
-//    lateinit var memoryRepositoryApixu: Repository
-//
-//    @Inject @field:Named(RepositoryModule.REPOSITORY_MEMORY_OPENWEATHER)
-//    lateinit var memoryRepositoryOpenWeather: Repository
-//
-//
-//    // Room repositories
-//    @Inject @field:Named(RepositoryModule.REPOSITORY_ROOM_APIXU)
-//    lateinit var roomRepositoryApixu: Repository
-//
-//    @Inject @field:Named(RepositoryModule.REPOSITORY_ROOM_OPENWEATHER)
-//    lateinit var roomRepositoryOpenWeather: Repository
-//
-//
-//    // Realm repositories
-//    @Inject @field:Named(RepositoryModule.REPOSITORY_REALM_APIXU)
-//    lateinit var realmRepositoryApixu: Repository
-//
-//    @Inject @field:Named(RepositoryModule.REPOSITORY_REALM_OPENWEATHER)
-//    lateinit var realmRepositoryOpenWeather: Repository
+    // Dagger: in-memory repositories
+    @Inject @field:Named(RepositoryModule.REPOSITORY_MEMORY_APIXU)
+    lateinit var daggerMemoryRepositoryApixu: Repository
+
+    @Inject @field:Named(RepositoryModule.REPOSITORY_MEMORY_OPENWEATHER)
+    lateinit var daggerMemoryRepositoryOpenWeather: Repository
 
 
-    // In-memory repositories
-    private val memoryRepositoryApixu: Repository by inject(RepositoryModule.REPOSITORY_MEMORY_APIXU)
-    private val memoryRepositoryOpenWeather: Repository by inject(RepositoryModule.REPOSITORY_MEMORY_OPENWEATHER)
+    // Dagger: Room repositories
+    @Inject @field:Named(RepositoryModule.REPOSITORY_ROOM_APIXU)
+    lateinit var daggerRoomRepositoryApixu: Repository
+
+    @Inject @field:Named(RepositoryModule.REPOSITORY_ROOM_OPENWEATHER)
+    lateinit var daggerRoomRepositoryOpenWeather: Repository
 
 
-    // Room repositories
-    private val roomRepositoryApixu: Repository by inject(RepositoryModule.REPOSITORY_ROOM_APIXU)
-    private val roomRepositoryOpenWeather: Repository by inject(RepositoryModule.REPOSITORY_ROOM_OPENWEATHER)
+    // Dagger: Realm repositories
+    @Inject @field:Named(RepositoryModule.REPOSITORY_REALM_APIXU)
+    lateinit var daggerRealmRepositoryApixu: Repository
+
+    @Inject @field:Named(RepositoryModule.REPOSITORY_REALM_OPENWEATHER)
+    lateinit var daggerRealmRepositoryOpenWeather: Repository
 
 
-    // Realm repositories
-    private val realmRepositoryApixu: Repository by inject(RepositoryModule.REPOSITORY_REALM_APIXU)
-    private val realmRepositoryOpenWeather: Repository by inject(RepositoryModule.REPOSITORY_REALM_OPENWEATHER)
+    // Koin: in-memory repositories
+    private val koinMemoryRepositoryApixu: Repository by inject(RepositoryModule.REPOSITORY_MEMORY_APIXU)
+    private val koinMemoryRepositoryOpenWeather: Repository by inject(RepositoryModule.REPOSITORY_MEMORY_OPENWEATHER)
+
+
+    // Koin: Room repositories
+    private val koinRoomRepositoryApixu: Repository by inject(RepositoryModule.REPOSITORY_ROOM_APIXU)
+    private val koinRoomRepositoryOpenWeather: Repository by inject(RepositoryModule.REPOSITORY_ROOM_OPENWEATHER)
+
+
+    // Koin: Realm repositories
+    private val koinRealmRepositoryApixu: Repository by inject(RepositoryModule.REPOSITORY_REALM_APIXU)
+    private val koinRealmRepositoryOpenWeather: Repository by inject(RepositoryModule.REPOSITORY_REALM_OPENWEATHER)
+
 
     private val disposables = CompositeDisposable()
 
@@ -74,58 +76,104 @@ class MainActivity : BaseActivity() {
     }
 
     private fun bindListeners() {
-        disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonMemoryApixu))
+        // dagger
+        disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonDaggerMemoryApixu))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe {
                     Log.e("------------------", "-----------> FETCHING WEATHER - APIXU")
-                    fetchWeather(memoryRepositoryApixu)
+                    fetchWeather(koinMemoryRepositoryApixu, "APX")
                 })
 
-        disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonMemoryOpenWeather))
+        disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonDaggerMemoryOpenWeather))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe {
                     Log.e("------------------", "-----------> FETCHING WEATHER - OPENWEATHER")
-                    fetchWeather(memoryRepositoryOpenWeather)
+                    fetchWeather(koinMemoryRepositoryOpenWeather, "OPN")
                 })
 
-        disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonRoomApixu))
+        disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonDaggerRoomApixu))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe {
                     Log.e("------------------", "-----------> FETCHING WEATHER - APIXU")
-                    fetchWeather(roomRepositoryApixu)
+                    fetchWeather(koinRoomRepositoryApixu, "APX")
                 })
 
-        disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonRoomOpenWeather))
+        disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonDaggerRoomOpenWeather))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe {
                     Log.e("------------------", "-----------> FETCHING WEATHER - OPENWEATHER")
-                    fetchWeather(roomRepositoryOpenWeather)
+                    fetchWeather(koinRoomRepositoryOpenWeather, "OPN")
                 })
 
-        disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonRealmApixu))
+        disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonDaggerRealmApixu))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe {
                     Log.e("------------------", "-----------> FETCHING WEATHER - APIXU")
-                    fetchWeather(realmRepositoryApixu)
+                    fetchWeather(koinRealmRepositoryApixu, "APX")
                 })
 
-        disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonRealmOpenWeather))
+        disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonDaggerRealmOpenWeather))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe {
                     Log.e("------------------", "-----------> FETCHING WEATHER - OPENWEATHER")
-                    fetchWeather(realmRepositoryOpenWeather)
+                    fetchWeather(koinRealmRepositoryOpenWeather, "OPN")
+                })
+
+        // koin
+        disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonKoinMemoryApixu))
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .subscribe {
+                    Log.e("------------------", "-----------> FETCHING WEATHER - APIXU")
+                    fetchWeather(daggerMemoryRepositoryApixu, "APX")
+                })
+
+        disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonKoinMemoryOpenWeather))
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .subscribe {
+                    Log.e("------------------", "-----------> FETCHING WEATHER - OPENWEATHER")
+                    fetchWeather(daggerMemoryRepositoryOpenWeather, "OPN")
+                })
+
+        disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonKoinRoomApixu))
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .subscribe {
+                    Log.e("------------------", "-----------> FETCHING WEATHER - APIXU")
+                    fetchWeather(daggerRoomRepositoryApixu, "APX")
+                })
+
+        disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonKoinRoomOpenWeather))
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .subscribe {
+                    Log.e("------------------", "-----------> FETCHING WEATHER - OPENWEATHER")
+                    fetchWeather(daggerRoomRepositoryOpenWeather, "OPN")
+                })
+
+        disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonKoinRealmApixu))
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .subscribe {
+                    Log.e("------------------", "-----------> FETCHING WEATHER - APIXU")
+                    fetchWeather(daggerRealmRepositoryApixu, "APX")
+                })
+
+        disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonKoinRealmOpenWeather))
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .subscribe {
+                    Log.e("------------------", "-----------> FETCHING WEATHER - OPENWEATHER")
+                    fetchWeather(daggerRealmRepositoryOpenWeather, "OPN")
                 })
     }
 
-    private fun fetchWeather(repository: Repository) {
+    private fun fetchWeather(repository: Repository, api: String) {
         disposables.add(repository
-                .getWeather("Madrid")
+                .getWeatherWrapped("Madrid")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ weather ->
-                    Log.e("------------------", "-----------> WEATHER: ${weather.location.name} updated at ${Date(weather.lastUpdated)}")
+                .subscribe({
+                    Log.e("------------------", "-----------> WEATHER: ${it.weather.location.name} updated at ${Date(it.weather.lastUpdated)}")
+                    Toast.makeText(this, "$api ${it.source} - expires in: ${it.weather.lastUpdated + Repository.EXPIRATION_TIME - System.currentTimeMillis()} ms", Toast.LENGTH_SHORT).show()
                 }, {
                     Log.e("------------------", "-----------> ERROR: ${it.message}")
+                    Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show()
                 }))
     }
 }

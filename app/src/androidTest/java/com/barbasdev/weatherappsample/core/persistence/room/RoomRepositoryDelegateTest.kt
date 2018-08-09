@@ -2,27 +2,40 @@ package com.barbasdev.weatherappsample.core.persistence.room
 
 import com.barbasdev.weatherappsample.base.TestApplication
 import com.barbasdev.weatherappsample.core.network.apixu.ApixuApiClientDelegateTest
+import com.barbasdev.weatherappsample.core.network.openweather.OpenWeatherApiClientDelegateTest
 import com.barbasdev.weatherappsample.core.persistence.Repository
-import com.barbasdev.weatherappsample.di.module.TestNetworkConstModule
+import com.barbasdev.weatherappsample.core.persistence.WeatherResultsTestHelper
+import com.barbasdev.weatherappsample.di.dagger.modules.DatabaseModule
 import com.barbasdev.weatherappsample.di.dagger.modules.RepositoryModule
+import com.barbasdev.weatherappsample.di.dagger.modules.TestNetworkConstModule
 import junit.framework.Assert
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
+import org.koin.standalone.inject
+import org.koin.test.KoinTest
 import javax.inject.Inject
 import javax.inject.Named
 
-class RoomRepositoryDelegateTest {
+class RoomRepositoryDelegateTest : KoinTest {
+
+    // dagger
+    @Inject
+    @field:Named(RepositoryModule.REPOSITORY_ROOM_APIXU)
+    lateinit var daggerApixuRoomRepository: Repository
 
     @Inject
-    @field:Named(RepositoryModule.REPOSITORY_MEMORY_APIXU)
-    lateinit var apixuRoomRepository: Repository
+    @field:Named(RepositoryModule.REPOSITORY_ROOM_OPENWEATHER)
+    lateinit var daggerOpenWeatherRoomRepository: Repository
 
-    @Inject
-    @field:Named(RepositoryModule.REPOSITORY_MEMORY_OPENWEATHER)
-    lateinit var openWeatherMemoryRepository: Repository
+
+    // koin
+    private val koinApixuRoomRepository: Repository by inject(RepositoryModule.REPOSITORY_ROOM_APIXU)
+    private val koinOpenWeatherRoomRepository: Repository by inject(RepositoryModule.REPOSITORY_ROOM_OPENWEATHER)
+
 
     private lateinit var server: MockWebServer
 
@@ -42,19 +55,26 @@ class RoomRepositoryDelegateTest {
     }
 
     @Test
-    fun getWeatherApixu() {
+    fun getWeatherApixuDagger() {
         server.enqueue(MockResponse().setBody(ApixuApiClientDelegateTest.JSON.RESPONSE_WEATHER))
+        WeatherResultsTestHelper.assertWeatherResultsApixu(daggerApixuRoomRepository)
+    }
 
-        val weather = apixuRoomRepository
-                .getWeather("London")
-                .test()
-                .await()
-                .values()[0]
+    @Test
+    fun getWeatherApixuKoin() {
+       server.enqueue(MockResponse().setBody(ApixuApiClientDelegateTest.JSON.RESPONSE_WEATHER))
+        WeatherResultsTestHelper.assertWeatherResultsApixu(koinApixuRoomRepository)
+    }
 
-        Assert.assertEquals("London", weather.location.name)
-        Assert.assertEquals("United Kingdom", weather.location.country)
-        Assert.assertEquals(51.52F, weather.location.lat)
-        Assert.assertEquals(-0.11F, weather.location.lon)
-        Assert.assertEquals(2F, weather.temperature)
+    @Test
+    fun getWeatherOpenWeatherDagger() {
+        server.enqueue(MockResponse().setBody(OpenWeatherApiClientDelegateTest.JSON.RESPONSE_WEATHER))
+        WeatherResultsTestHelper.assertWeatherResultsOpenWeather(daggerOpenWeatherRoomRepository)
+    }
+
+    @Test
+    fun getWeatherOpenWeatherKoin() {
+        server.enqueue(MockResponse().setBody(OpenWeatherApiClientDelegateTest.JSON.RESPONSE_WEATHER))
+        WeatherResultsTestHelper.assertWeatherResultsOpenWeather(koinOpenWeatherRoomRepository)
     }
 }

@@ -73,8 +73,8 @@ dependencies {
 
     implementation "org.koin:koin-android:$koin"
     implementation "org.koin:koin-core:$koin"
-    implementation "org.koin:koin-android:$koin"
     implementation "org.koin:koin-android-architecture:$koin"
     implementation "org.koin:koin-spark:$koin"
+    androidTestImplementation "org.koin:koin-test:$koin"
     testImplementation "org.koin:koin-test:$koin"
 }

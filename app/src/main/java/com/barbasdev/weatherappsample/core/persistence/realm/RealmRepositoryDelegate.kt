@@ -7,6 +7,7 @@ import com.barbasdev.weatherappsample.core.persistence.Repository
 import com.barbasdev.weatherappsample.core.persistence.Repository.Companion.EXPIRATION_TIME
 import com.barbasdev.weatherappsample.core.presentation.location.StorableLocation
 import com.barbasdev.weatherappsample.core.presentation.weather.Weather
+import com.barbasdev.weatherappsample.core.presentation.weather.WeatherWrapper
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.realm.Realm
@@ -24,21 +25,30 @@ class RealmRepositoryDelegate(
         return getWeatherFromApiWithSave(location)
                 .startWith(getWeatherFromRealm(location))
                 .firstOrError()
+                .map {
+                    it.weather
+                }
     }
 
-    private fun getWeatherFromRealm(location: String): Observable<WeatherRealmDelegate> {
+    override fun getWeatherWrapped(location: String): Single<WeatherWrapper> {
+        return getWeatherFromApiWithSave(location)
+                .startWith(getWeatherFromRealm(location))
+                .firstOrError()
+    }
+
+    private fun getWeatherFromRealm(location: String): Observable<WeatherWrapper> {
         return Observable.create {
 
             Realm.getInstance(realmConfiguration)?.apply {
                 val results: RealmResults<WeatherRealmDelegate> = where(WeatherRealmDelegate::class.java)
-                    .equalTo("name", location)
-                    .findAll()
+                        .equalTo("name", location)
+                        .findAll()
                 if (results.size > 0) {
                     results.first()?.let { weather ->
                         val now = System.currentTimeMillis()
                         if (now - weather.lastUpdated < EXPIRATION_TIME) {
                             Log.e("------------------", "-----------> ${Thread.currentThread().name} - WEATHER FETCHED FROM THE CACHE")
-                            it.onNext(copyFromRealm(weather))
+                            it.onNext(WeatherWrapper(copyFromRealm(weather), "CACHE"))
                         } else {
                             Log.e("------------------", "-----------> WEATHER FROM CACHE EXPIRED")
                             beginTransaction()
@@ -52,13 +62,16 @@ class RealmRepositoryDelegate(
         }
     }
 
-    private fun getWeatherFromApiWithSave(location: String): Observable<Weather> {
+    private fun getWeatherFromApiWithSave(location: String): Observable<WeatherWrapper> {
         return apiClient.getWeather(location)
+                .map {
+                    WeatherWrapper(it,"API")
+                }
                 .doOnSuccess { weather ->
                     with(Realm.getInstance(realmConfiguration)) {
                         executeTransaction {
-                            Log.e("------------------", "-----------> ${Thread.currentThread().name} - WEATHER FETCHED FROM THE API: SAVING IN ROOM...")
-                            it.insertOrUpdate(weather.toRealm())
+                            Log.e("------------------", "-----------> ${Thread.currentThread().name} - WEATHER FETCHED FROM THE API: SAVING IN REALM...")
+                            it.insertOrUpdate(weather.weather.toRealm())
                             Log.e("------------------", "-----------> SAVED!!!")
                         }
                     }
