@@ -81,42 +81,42 @@ class MainActivity : BaseActivity() {
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe {
                     Log.e("------------------", "-----------> FETCHING WEATHER - APIXU")
-                    fetchWeather(koinMemoryRepositoryApixu, "APX")
+                    fetchWeather(daggerMemoryRepositoryApixu, "APX")
                 })
 
         disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonDaggerMemoryOpenWeather))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe {
                     Log.e("------------------", "-----------> FETCHING WEATHER - OPENWEATHER")
-                    fetchWeather(koinMemoryRepositoryOpenWeather, "OPN")
+                    fetchWeather(daggerMemoryRepositoryOpenWeather, "OPN")
                 })
 
         disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonDaggerRoomApixu))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe {
                     Log.e("------------------", "-----------> FETCHING WEATHER - APIXU")
-                    fetchWeather(koinRoomRepositoryApixu, "APX")
+                    fetchWeather(daggerRoomRepositoryApixu, "APX")
                 })
 
         disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonDaggerRoomOpenWeather))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe {
                     Log.e("------------------", "-----------> FETCHING WEATHER - OPENWEATHER")
-                    fetchWeather(koinRoomRepositoryOpenWeather, "OPN")
+                    fetchWeather(daggerRoomRepositoryOpenWeather, "OPN")
                 })
 
         disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonDaggerRealmApixu))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe {
                     Log.e("------------------", "-----------> FETCHING WEATHER - APIXU")
-                    fetchWeather(koinRealmRepositoryApixu, "APX")
+                    fetchWeather(daggerRealmRepositoryApixu, "APX")
                 })
 
         disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonDaggerRealmOpenWeather))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe {
                     Log.e("------------------", "-----------> FETCHING WEATHER - OPENWEATHER")
-                    fetchWeather(koinRealmRepositoryOpenWeather, "OPN")
+                    fetchWeather(daggerRealmRepositoryOpenWeather, "OPN")
                 })
 
         // koin
@@ -124,42 +124,42 @@ class MainActivity : BaseActivity() {
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe {
                     Log.e("------------------", "-----------> FETCHING WEATHER - APIXU")
-                    fetchWeather(daggerMemoryRepositoryApixu, "APX")
+                    fetchWeather(koinMemoryRepositoryApixu, "APX")
                 })
 
         disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonKoinMemoryOpenWeather))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe {
                     Log.e("------------------", "-----------> FETCHING WEATHER - OPENWEATHER")
-                    fetchWeather(daggerMemoryRepositoryOpenWeather, "OPN")
+                    fetchWeather(koinMemoryRepositoryOpenWeather, "OPN")
                 })
 
         disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonKoinRoomApixu))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe {
                     Log.e("------------------", "-----------> FETCHING WEATHER - APIXU")
-                    fetchWeather(daggerRoomRepositoryApixu, "APX")
+                    fetchWeather(koinRoomRepositoryApixu, "APX")
                 })
 
         disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonKoinRoomOpenWeather))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe {
                     Log.e("------------------", "-----------> FETCHING WEATHER - OPENWEATHER")
-                    fetchWeather(daggerRoomRepositoryOpenWeather, "OPN")
+                    fetchWeather(koinRoomRepositoryOpenWeather, "OPN")
                 })
 
         disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonKoinRealmApixu))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe {
                     Log.e("------------------", "-----------> FETCHING WEATHER - APIXU")
-                    fetchWeather(daggerRealmRepositoryApixu, "APX")
+                    fetchWeather(koinRealmRepositoryApixu, "APX")
                 })
 
         disposables.add(RxView.clicks(findViewById<Button>(R.id.buttonKoinRealmOpenWeather))
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe {
                     Log.e("------------------", "-----------> FETCHING WEATHER - OPENWEATHER")
-                    fetchWeather(daggerRealmRepositoryOpenWeather, "OPN")
+                    fetchWeather(koinRealmRepositoryOpenWeather, "OPN")
                 })
     }
 
