@@ -7,7 +7,7 @@ import android.widget.Toast
 import com.barbasdev.weatherappsample.R
 import com.barbasdev.weatherappsample.base.BaseActivity
 import com.barbasdev.weatherappsample.core.persistence.Repository
-import com.barbasdev.weatherappsample.di.dagger.modules.RepositoryModule
+import com.barbasdev.weatherappsample.di.RepositoryConstants
 import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -21,42 +21,42 @@ import javax.inject.Named
 class MainActivity : BaseActivity() {
 
     // Dagger: in-memory repositories
-    @Inject @field:Named(RepositoryModule.REPOSITORY_MEMORY_APIXU)
+    @Inject @field:Named(RepositoryConstants.REPOSITORY_MEMORY_APIXU)
     lateinit var daggerMemoryRepositoryApixu: Repository
 
-    @Inject @field:Named(RepositoryModule.REPOSITORY_MEMORY_OPENWEATHER)
+    @Inject @field:Named(RepositoryConstants.REPOSITORY_MEMORY_OPENWEATHER)
     lateinit var daggerMemoryRepositoryOpenWeather: Repository
 
 
     // Dagger: Room repositories
-    @Inject @field:Named(RepositoryModule.REPOSITORY_ROOM_APIXU)
+    @Inject @field:Named(RepositoryConstants.REPOSITORY_ROOM_APIXU)
     lateinit var daggerRoomRepositoryApixu: Repository
 
-    @Inject @field:Named(RepositoryModule.REPOSITORY_ROOM_OPENWEATHER)
+    @Inject @field:Named(RepositoryConstants.REPOSITORY_ROOM_OPENWEATHER)
     lateinit var daggerRoomRepositoryOpenWeather: Repository
 
 
     // Dagger: Realm repositories
-    @Inject @field:Named(RepositoryModule.REPOSITORY_REALM_APIXU)
+    @Inject @field:Named(RepositoryConstants.REPOSITORY_REALM_APIXU)
     lateinit var daggerRealmRepositoryApixu: Repository
 
-    @Inject @field:Named(RepositoryModule.REPOSITORY_REALM_OPENWEATHER)
+    @Inject @field:Named(RepositoryConstants.REPOSITORY_REALM_OPENWEATHER)
     lateinit var daggerRealmRepositoryOpenWeather: Repository
 
 
     // Koin: in-memory repositories
-    private val koinMemoryRepositoryApixu: Repository by inject(RepositoryModule.REPOSITORY_MEMORY_APIXU)
-    private val koinMemoryRepositoryOpenWeather: Repository by inject(RepositoryModule.REPOSITORY_MEMORY_OPENWEATHER)
+    private val koinMemoryRepositoryApixu: Repository by inject(RepositoryConstants.REPOSITORY_MEMORY_APIXU)
+    private val koinMemoryRepositoryOpenWeather: Repository by inject(RepositoryConstants.REPOSITORY_MEMORY_OPENWEATHER)
 
 
     // Koin: Room repositories
-    private val koinRoomRepositoryApixu: Repository by inject(RepositoryModule.REPOSITORY_ROOM_APIXU)
-    private val koinRoomRepositoryOpenWeather: Repository by inject(RepositoryModule.REPOSITORY_ROOM_OPENWEATHER)
+    private val koinRoomRepositoryApixu: Repository by inject(RepositoryConstants.REPOSITORY_ROOM_APIXU)
+    private val koinRoomRepositoryOpenWeather: Repository by inject(RepositoryConstants.REPOSITORY_ROOM_OPENWEATHER)
 
 
     // Koin: Realm repositories
-    private val koinRealmRepositoryApixu: Repository by inject(RepositoryModule.REPOSITORY_REALM_APIXU)
-    private val koinRealmRepositoryOpenWeather: Repository by inject(RepositoryModule.REPOSITORY_REALM_OPENWEATHER)
+    private val koinRealmRepositoryApixu: Repository by inject(RepositoryConstants.REPOSITORY_REALM_APIXU)
+    private val koinRealmRepositoryOpenWeather: Repository by inject(RepositoryConstants.REPOSITORY_REALM_OPENWEATHER)
 
 
     private val disposables = CompositeDisposable()

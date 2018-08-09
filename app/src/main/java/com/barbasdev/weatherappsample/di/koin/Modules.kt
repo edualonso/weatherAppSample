@@ -13,6 +13,9 @@ import com.barbasdev.weatherappsample.core.persistence.memory.MemoryRepositoryDe
 import com.barbasdev.weatherappsample.core.persistence.realm.RealmRepositoryDelegate
 import com.barbasdev.weatherappsample.core.persistence.room.AppRoomDatabase
 import com.barbasdev.weatherappsample.core.persistence.room.RoomRepositoryDelegate
+import com.barbasdev.weatherappsample.di.DatabaseConstants
+import com.barbasdev.weatherappsample.di.NetworkConstants
+import com.barbasdev.weatherappsample.di.RepositoryConstants
 import com.barbasdev.weatherappsample.di.dagger.modules.DatabaseModule
 import com.barbasdev.weatherappsample.di.dagger.modules.NetworkConstModule
 import com.barbasdev.weatherappsample.di.dagger.modules.NetworkModule
@@ -29,17 +32,17 @@ object Modules {
 
     // constants used in the network module
     val networkConstModule: Module = applicationContext {
-        bean(NetworkModule.APIXU_BASE_URL) {
-            NetworkConstModule.CONST_APIXU_BASE_URL
+        bean(NetworkConstants.APIXU_BASE_URL) {
+            NetworkConstants.CONST_APIXU_BASE_URL
         }
-        bean(NetworkModule.APIXU_API_KEY) {
-            NetworkConstModule.CONST_APIXU_API_KEY
+        bean(NetworkConstants.APIXU_API_KEY) {
+            NetworkConstants.CONST_APIXU_API_KEY
         }
-        bean(NetworkModule.OPENWEATHER_BASE_URL) {
-            NetworkConstModule.CONST_OPENWEATHER_BASE_URL
+        bean(NetworkConstants.OPENWEATHER_BASE_URL) {
+            NetworkConstants.CONST_OPENWEATHER_BASE_URL
         }
-        bean(NetworkModule.OPENWEATHER_API_KEY) {
-            NetworkConstModule.CONST_OPENWEATHER_API_KEY
+        bean(NetworkConstants.OPENWEATHER_API_KEY) {
+            NetworkConstants.CONST_OPENWEATHER_API_KEY
         }
     }
 
@@ -49,28 +52,28 @@ object Modules {
 
         // Apixu service
         bean {
-            NetworkModule.getRetrofit(get(
-                    NetworkModule.APIXU_BASE_URL),
-                    ApixuApiKeyInterceptor(get(NetworkModule.APIXU_API_KEY))
+            NetworkConstants.getRetrofit(get(
+                    NetworkConstants.APIXU_BASE_URL),
+                    ApixuApiKeyInterceptor(get(NetworkConstants.APIXU_API_KEY))
             ).create(ApixuWeatherService::class.java)
         }
 
         // Openweather service
         bean {
-            NetworkModule.getRetrofit(get(
-                    NetworkModule.OPENWEATHER_BASE_URL),
-                    OpenWeatherApiKeyInterceptor(get(NetworkModule.OPENWEATHER_API_KEY))
+            NetworkConstants.getRetrofit(get(
+                    NetworkConstants.OPENWEATHER_BASE_URL),
+                    OpenWeatherApiKeyInterceptor(get(NetworkConstants.OPENWEATHER_API_KEY))
             ).create(OpenWeatherService::class.java)
         }
 
         // Apixu api client
-        bean(NetworkModule.APIXU_API_CLIENT) {
+        bean(NetworkConstants.APIXU_API_CLIENT) {
             ApixuApiClientDelegate(get()) as ApiClient
 //            ApixuApiClientDelegate(get())
         }
 
         // Openweather api client
-        bean(NetworkModule.OPENWEATHER_API_CLIENT) {
+        bean(NetworkConstants.OPENWEATHER_API_CLIENT) {
             OpenWeatherApiClientDelegate(get()) as ApiClient
 //            OpenWeatherApiClientDelegate(get())
         }
@@ -81,30 +84,30 @@ object Modules {
     val databaseModule: Module = applicationContext {
 
         // realm
-        bean(DatabaseModule.REALM_DB_APIXU_KOIN) {
+        bean(DatabaseConstants.REALM_DB_APIXU_KOIN) {
             RealmConfiguration.Builder()
-                    .name(DatabaseModule.REALM_DB_APIXU_KOIN)
-                    .schemaVersion(DatabaseModule.REALM_DB_SCHEMA)
+                    .name(DatabaseConstants.REALM_DB_APIXU_KOIN)
+                    .schemaVersion(DatabaseConstants.REALM_DB_SCHEMA)
                     .deleteRealmIfMigrationNeeded()
                     .build()
         }
-        bean(DatabaseModule.REALM_DB_OPENWEATHER_KOIN) {
+        bean(DatabaseConstants.REALM_DB_OPENWEATHER_KOIN) {
             RealmConfiguration.Builder()
-                    .name(DatabaseModule.REALM_DB_OPENWEATHER_KOIN)
-                    .schemaVersion(DatabaseModule.REALM_DB_SCHEMA)
+                    .name(DatabaseConstants.REALM_DB_OPENWEATHER_KOIN)
+                    .schemaVersion(DatabaseConstants.REALM_DB_SCHEMA)
                     .deleteRealmIfMigrationNeeded()
                     .build()
         }
 
 
         // room
-        bean(DatabaseModule.ROOM_DB_APIXU_DAO_KOIN) {
-            Room.databaseBuilder(androidApplication(), AppRoomDatabase::class.java, DatabaseModule.ROOM_DB_APIXU)
+        bean(DatabaseConstants.ROOM_DB_APIXU_DAO_KOIN) {
+            Room.databaseBuilder(androidApplication(), AppRoomDatabase::class.java, DatabaseConstants.ROOM_DB_APIXU)
                     .build()
                     .weatherDao()
         }
-        bean(DatabaseModule.ROOM_DB_OPENWEATHER_DAO_KOIN) {
-            Room.databaseBuilder(androidApplication(), AppRoomDatabase::class.java, DatabaseModule.ROOM_DB_OPENWEATHER)
+        bean(DatabaseConstants.ROOM_DB_OPENWEATHER_DAO_KOIN) {
+            Room.databaseBuilder(androidApplication(), AppRoomDatabase::class.java, DatabaseConstants.ROOM_DB_OPENWEATHER)
                     .build()
                     .weatherDao()
         }
@@ -115,35 +118,35 @@ object Modules {
     val repositoryModule: Module = applicationContext {
 
         // memory
-        bean(RepositoryModule.REPOSITORY_MEMORY_APIXU) {
+        bean(RepositoryConstants.REPOSITORY_MEMORY_APIXU) {
 //            MemoryRepositoryDelegate(get<ApixuApiClientDelegate>()) as Repository
-            MemoryRepositoryDelegate(get(NetworkModule.APIXU_API_CLIENT)) as Repository
+            MemoryRepositoryDelegate(get(NetworkConstants.APIXU_API_CLIENT)) as Repository
         }
-        bean(RepositoryModule.REPOSITORY_MEMORY_OPENWEATHER) {
+        bean(RepositoryConstants.REPOSITORY_MEMORY_OPENWEATHER) {
 //            MemoryRepositoryDelegate(get<OpenWeatherApiClientDelegate>()) as Repository
-            MemoryRepositoryDelegate(get(NetworkModule.OPENWEATHER_API_CLIENT)) as Repository
+            MemoryRepositoryDelegate(get(NetworkConstants.OPENWEATHER_API_CLIENT)) as Repository
         }
 
 
         // room
-        bean(RepositoryModule.REPOSITORY_ROOM_APIXU) {
-//            RoomRepositoryDelegate(get<ApixuApiClientDelegate>(), get(DatabaseModule.ROOM_DB_APIXU_DAO_KOIN)) as Repository
-            RoomRepositoryDelegate(get(NetworkModule.APIXU_API_CLIENT), get(DatabaseModule.ROOM_DB_APIXU_DAO_KOIN)) as Repository
+        bean(RepositoryConstants.REPOSITORY_ROOM_APIXU) {
+//            RoomRepositoryDelegate(get<ApixuApiClientDelegate>(), get(DatabaseConstants.ROOM_DB_APIXU_DAO_KOIN)) as Repository
+            RoomRepositoryDelegate(get(NetworkConstants.APIXU_API_CLIENT), get(DatabaseConstants.ROOM_DB_APIXU_DAO_KOIN)) as Repository
         }
-        bean(RepositoryModule.REPOSITORY_ROOM_OPENWEATHER) {
-//            RoomRepositoryDelegate(get<OpenWeatherApiClientDelegate>(), get(DatabaseModule.ROOM_DB_OPENWEATHER_DAO_KOIN)) as Repository
-            RoomRepositoryDelegate(get(NetworkModule.OPENWEATHER_API_CLIENT), get(DatabaseModule.ROOM_DB_OPENWEATHER_DAO_KOIN)) as Repository
+        bean(RepositoryConstants.REPOSITORY_ROOM_OPENWEATHER) {
+//            RoomRepositoryDelegate(get<OpenWeatherApiClientDelegate>(), get(DatabaseConstants.ROOM_DB_OPENWEATHER_DAO_KOIN)) as Repository
+            RoomRepositoryDelegate(get(NetworkConstants.OPENWEATHER_API_CLIENT), get(DatabaseConstants.ROOM_DB_OPENWEATHER_DAO_KOIN)) as Repository
         }
 
 
         // realm
-        bean(RepositoryModule.REPOSITORY_REALM_APIXU) {
-//            RealmRepositoryDelegate(get<ApixuApiClientDelegate>(), get(DatabaseModule.REALM_DB_APIXU_KOIN)) as Repository
-            RealmRepositoryDelegate(get(NetworkModule.APIXU_API_CLIENT), get(DatabaseModule.REALM_DB_APIXU_KOIN)) as Repository
+        bean(RepositoryConstants.REPOSITORY_REALM_APIXU) {
+//            RealmRepositoryDelegate(get<ApixuApiClientDelegate>(), get(DatabaseConstants.REALM_DB_APIXU_KOIN)) as Repository
+            RealmRepositoryDelegate(get(NetworkConstants.APIXU_API_CLIENT), get(DatabaseConstants.REALM_DB_APIXU_KOIN)) as Repository
         }
-        bean(RepositoryModule.REPOSITORY_REALM_OPENWEATHER) {
-//            RealmRepositoryDelegate(get<OpenWeatherApiClientDelegate>(), get(DatabaseModule.REALM_DB_OPENWEATHER_KOIN)) as Repository
-            RealmRepositoryDelegate(get(NetworkModule.OPENWEATHER_API_CLIENT), get(DatabaseModule.REALM_DB_OPENWEATHER_KOIN)) as Repository
+        bean(RepositoryConstants.REPOSITORY_REALM_OPENWEATHER) {
+//            RealmRepositoryDelegate(get<OpenWeatherApiClientDelegate>(), get(DatabaseConstants.REALM_DB_OPENWEATHER_KOIN)) as Repository
+            RealmRepositoryDelegate(get(NetworkConstants.OPENWEATHER_API_CLIENT), get(DatabaseConstants.REALM_DB_OPENWEATHER_KOIN)) as Repository
         }
     }
 }
