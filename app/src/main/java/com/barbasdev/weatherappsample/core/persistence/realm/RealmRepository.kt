@@ -16,7 +16,7 @@ import io.realm.RealmObject
 import io.realm.RealmResults
 import io.realm.annotations.Ignore
 
-class RealmRepositoryDelegate(
+class RealmRepository(
         private val apiClient: ApiClient,
         private val realmConfiguration: RealmConfiguration
 ) : Repository {
@@ -40,7 +40,7 @@ class RealmRepositoryDelegate(
         return Observable.create {
 
             Realm.getInstance(realmConfiguration)?.apply {
-                val results: RealmResults<WeatherRealmDelegate> = where(WeatherRealmDelegate::class.java)
+                val results: RealmResults<WeatherRealm> = where(WeatherRealm::class.java)
                         .equalTo("name", location)
                         .findAll()
                 if (results.size > 0) {
@@ -79,9 +79,9 @@ class RealmRepositoryDelegate(
                 .toObservable()
     }
 
-    private fun Weather.toRealm(): WeatherRealmDelegate {
+    private fun Weather.toRealm(): WeatherRealm {
         with(location) {
-            return WeatherRealmDelegate(
+            return WeatherRealm(
                     lastUpdated,
                     temperature,
                     id,
@@ -91,23 +91,4 @@ class RealmRepositoryDelegate(
                     lon)
         }
     }
-}
-
-
-/**
- *
- */
-open class WeatherRealmDelegate(
-        override var lastUpdated: Long = 0,
-        override var temperature: Float = 0f,
-        @PrimaryKey var id: Long = 0,
-        var name: String = "",
-        var country: String = "",
-        var lat: Float = 0f,
-        var lon: Float = 0f
-) : Weather, RealmObject() {
-
-    @Ignore
-    override var location: StorableLocation = StorableLocation()
-        get() = StorableLocation(id, name, country, lat, lon)
 }

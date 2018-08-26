@@ -1,4 +1,4 @@
-package com.barbasdev.weatherappsample.core.persistence.memory
+package com.barbasdev.weatherappsample.core.persistence.room
 
 import android.util.Log
 import com.barbasdev.weatherappsample.core.network.ApiClient
@@ -9,18 +9,14 @@ import com.barbasdev.weatherappsample.core.presentation.weather.WeatherWrapper
 import io.reactivex.Observable
 import io.reactivex.Single
 
-/**
- *
- */
-class MemoryRepositoryDelegate(
-        private val apiClient: ApiClient
+class RoomRepository(
+        private val apiClient: ApiClient,
+        private val weatherDao: WeatherDao
 ) : Repository {
-
-    private val weatherCache = mutableListOf<Weather>()
 
     override fun getWeather(location: String): Single<Weather> {
         return getWeatherFromApiWithSave(location)
-                .startWith(getWeatherFromCache(location))
+                .startWith(getWeatherFromRoom(location))
                 .firstOrError()
                 .map {
                     it.weather
@@ -29,23 +25,21 @@ class MemoryRepositoryDelegate(
 
     override fun getWeatherWrapped(location: String): Single<WeatherWrapper> {
         return getWeatherFromApiWithSave(location)
-                .startWith(getWeatherFromCache(location))
+                .startWith(getWeatherFromRoom(location))
                 .firstOrError()
     }
 
-    private fun getWeatherFromCache(location: String): Observable<WeatherWrapper> {
-        return Observable.create<WeatherWrapper> {
-            weatherCache
-                    .find {
-                        it.location.name.contains(location, true)
-                    }.apply {
+    private fun getWeatherFromRoom(location: String): Observable<WeatherWrapper> {
+        return Observable.create {
+            weatherDao.getWeather(location)
+                    .run {
                         if (this != null) {
                             if (System.currentTimeMillis() - lastUpdated < EXPIRATION_TIME) {
                                 Log.e("------------------", "-----------> WEATHER FETCHED FROM THE CACHE")
                                 it.onNext(WeatherWrapper(this, "CACHE"))
                             } else {
                                 Log.e("------------------", "-----------> WEATHER FROM CACHE EXPIRED")
-                                weatherCache.remove(this)
+                                weatherDao.deleteWeather(location)
                             }
                         }
                         it.onComplete()
@@ -54,15 +48,28 @@ class MemoryRepositoryDelegate(
     }
 
     private fun getWeatherFromApiWithSave(location: String): Observable<WeatherWrapper> {
-        return apiClient
-                .getWeather(location)
+        return apiClient.getWeather(location)
                 .map {
                     WeatherWrapper(it, "API")
                 }
                 .doOnSuccess {
-                    weatherCache.add(it.weather)
-                    Log.e("------------------", "-----------> WEATHER FETCHED FROM THE API")
+                    Log.e("------------------", "-----------> ${Thread.currentThread().name} - WEATHER FETCHED FROM THE API: SAVING IN ROOM...")
+                    weatherDao.saveWeather(it.weather.toRoom())
+                    Log.e("------------------", "-----------> SAVED!!!")
                 }
                 .toObservable()
+    }
+
+    private fun Weather.toRoom(): WeatherRoom {
+        with(location) {
+            return WeatherRoom(
+                    lastUpdated,
+                    temperature,
+                    id,
+                    name,
+                    country,
+                    lat,
+                    lon)
+        }
     }
 }

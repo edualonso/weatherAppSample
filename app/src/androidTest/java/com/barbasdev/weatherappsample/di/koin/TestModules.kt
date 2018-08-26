@@ -1,21 +1,9 @@
 package com.barbasdev.weatherappsample.di.koin
 
 import android.arch.persistence.room.Room
-import com.barbasdev.weatherappsample.core.network.ApiClient
-import com.barbasdev.weatherappsample.core.network.apixu.ApixuApiClientDelegate
-import com.barbasdev.weatherappsample.core.network.apixu.ApixuApiKeyInterceptor
-import com.barbasdev.weatherappsample.core.network.apixu.ApixuWeatherService
-import com.barbasdev.weatherappsample.core.network.openweather.OpenWeatherApiClientDelegate
-import com.barbasdev.weatherappsample.core.network.openweather.OpenWeatherApiKeyInterceptor
-import com.barbasdev.weatherappsample.core.network.openweather.OpenWeatherService
-import com.barbasdev.weatherappsample.core.persistence.Repository
-import com.barbasdev.weatherappsample.core.persistence.memory.MemoryRepositoryDelegate
-import com.barbasdev.weatherappsample.core.persistence.realm.RealmRepositoryDelegate
 import com.barbasdev.weatherappsample.core.persistence.room.AppRoomDatabase
-import com.barbasdev.weatherappsample.core.persistence.room.RoomRepositoryDelegate
 import com.barbasdev.weatherappsample.di.DatabaseConstants
 import com.barbasdev.weatherappsample.di.NetworkConstants
-import com.barbasdev.weatherappsample.di.RepositoryConstants
 import com.barbasdev.weatherappsample.di.dagger.modules.*
 import io.realm.RealmConfiguration
 import org.koin.android.ext.koin.androidApplication

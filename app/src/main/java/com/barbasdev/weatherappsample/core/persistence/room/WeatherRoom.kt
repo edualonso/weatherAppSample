@@ -8,7 +8,7 @@ import com.barbasdev.weatherappsample.core.presentation.weather.Weather
 import io.realm.RealmObject
 
 @Entity(tableName = "weather")
-data class WeatherRoomDelegate(
+data class WeatherRoom(
         override val lastUpdated: Long,
         override val temperature: Float,
         @PrimaryKey val id: Long,

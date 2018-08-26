@@ -9,13 +9,13 @@ import android.arch.persistence.room.Query
 interface WeatherDao {
 
     @Query("SELECT * FROM weather WHERE name = :location")
-    fun getWeather(location: String): WeatherRoomDelegate?
+    fun getWeather(location: String): WeatherRoom?
 
     @Insert
-    fun saveWeather(weather: WeatherRoomDelegate)
+    fun saveWeather(weather: WeatherRoom)
 
     @Delete
-    fun deleteWeather(weather: WeatherRoomDelegate)
+    fun deleteWeather(weather: WeatherRoom)
 
     @Query("DELETE FROM weather WHERE name = :location")
     fun deleteWeather(location: String)

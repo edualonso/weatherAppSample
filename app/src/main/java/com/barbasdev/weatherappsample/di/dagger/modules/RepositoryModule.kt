@@ -2,9 +2,9 @@ package com.barbasdev.weatherappsample.di.dagger.modules
 
 import com.barbasdev.weatherappsample.core.network.ApiClient
 import com.barbasdev.weatherappsample.core.persistence.Repository
-import com.barbasdev.weatherappsample.core.persistence.memory.MemoryRepositoryDelegate
-import com.barbasdev.weatherappsample.core.persistence.realm.RealmRepositoryDelegate
-import com.barbasdev.weatherappsample.core.persistence.room.RoomRepositoryDelegate
+import com.barbasdev.weatherappsample.core.persistence.memory.MemoryRepository
+import com.barbasdev.weatherappsample.core.persistence.realm.RealmRepository
+import com.barbasdev.weatherappsample.core.persistence.room.RoomRepository
 import com.barbasdev.weatherappsample.core.persistence.room.WeatherDao
 import com.barbasdev.weatherappsample.di.DatabaseConstants
 import com.barbasdev.weatherappsample.di.NetworkConstants
@@ -29,7 +29,7 @@ class RepositoryModule {
     fun providesMemoryRepositoryApixu(
             @Named(NetworkConstants.APIXU_API_CLIENT) apiClient: ApiClient
     ): Repository =
-            MemoryRepositoryDelegate(apiClient)
+            MemoryRepository(apiClient)
 
     @Provides
     @Named(RepositoryConstants.REPOSITORY_MEMORY_OPENWEATHER)
@@ -37,7 +37,7 @@ class RepositoryModule {
     fun providesMemoryRepositoryOpenWeather(
             @Named(NetworkConstants.OPENWEATHER_API_CLIENT) apiClient: ApiClient
     ): Repository =
-            MemoryRepositoryDelegate(apiClient)
+            MemoryRepository(apiClient)
 
 
     // ROOM REPOS
@@ -49,7 +49,7 @@ class RepositoryModule {
             @Named(NetworkConstants.APIXU_API_CLIENT) apiClient: ApiClient,
             @Named(DatabaseConstants.ROOM_DB_APIXU_DAO_DAGGER) weatherDao: WeatherDao
     ): Repository =
-            RoomRepositoryDelegate(apiClient, weatherDao)
+            RoomRepository(apiClient, weatherDao)
 
     @Provides
     @Named(RepositoryConstants.REPOSITORY_ROOM_OPENWEATHER)
@@ -58,7 +58,7 @@ class RepositoryModule {
             @Named(NetworkConstants.OPENWEATHER_API_CLIENT) apiClient: ApiClient,
             @Named(DatabaseConstants.ROOM_DB_OPENWEATHER_DAO_DAGGER) weatherDao: WeatherDao
     ): Repository =
-            RoomRepositoryDelegate(apiClient, weatherDao)
+            RoomRepository(apiClient, weatherDao)
 
 
     // REALM REPOS
@@ -70,7 +70,7 @@ class RepositoryModule {
             @Named(NetworkConstants.APIXU_API_CLIENT) apiClient: ApiClient,
             @Named(DatabaseConstants.REALM_DB_APIXU_DAGGER) realmConfiguration: RealmConfiguration
     ): Repository =
-            RealmRepositoryDelegate(apiClient, realmConfiguration)
+            RealmRepository(apiClient, realmConfiguration)
 
     @Provides
     @Named(RepositoryConstants.REPOSITORY_REALM_OPENWEATHER)
@@ -79,5 +79,5 @@ class RepositoryModule {
             @Named(NetworkConstants.OPENWEATHER_API_CLIENT) apiClient: ApiClient,
             @Named(DatabaseConstants.REALM_DB_OPENWEATHER_DAGGER) realmConfiguration: RealmConfiguration
     ): Repository =
-            RealmRepositoryDelegate(apiClient, realmConfiguration)
+            RealmRepository(apiClient, realmConfiguration)
 }

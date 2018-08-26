@@ -1,14 +1,12 @@
 package com.barbasdev.weatherappsample.core.persistence.memory
 
 import com.barbasdev.weatherappsample.base.TestApplication
-import com.barbasdev.weatherappsample.core.network.apixu.ApixuApiClientDelegateTest
-import com.barbasdev.weatherappsample.core.network.openweather.OpenWeatherApiClientDelegateTest
+import com.barbasdev.weatherappsample.core.network.apixu.ApixuApiClientTest
+import com.barbasdev.weatherappsample.core.network.openweather.OpenWeatherApiClientTest
 import com.barbasdev.weatherappsample.core.persistence.Repository
 import com.barbasdev.weatherappsample.core.persistence.WeatherResultsTestHelper
 import com.barbasdev.weatherappsample.di.RepositoryConstants
-import com.barbasdev.weatherappsample.di.dagger.modules.RepositoryModule
 import com.barbasdev.weatherappsample.di.dagger.modules.TestNetworkConstModule
-import junit.framework.Assert.assertEquals
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
@@ -22,7 +20,7 @@ import javax.inject.Named
 /**
  * Created by edu on 24/02/2018.
  */
-class MemoryRepositoryDelegateTest : KoinTest {
+class MemoryRepositoryTest : KoinTest {
 
     // dagger
     @Inject
@@ -58,17 +56,17 @@ class MemoryRepositoryDelegateTest : KoinTest {
 
     @Test
     fun getWeatherApixu() {
-        server.enqueue(MockResponse().setBody(ApixuApiClientDelegateTest.JSON.RESPONSE_WEATHER))
+        server.enqueue(MockResponse().setBody(ApixuApiClientTest.JSON.RESPONSE_WEATHER))
         WeatherResultsTestHelper.assertWeatherResultsApixu(daggerApixuMemoryRepository)
-        server.enqueue(MockResponse().setBody(ApixuApiClientDelegateTest.JSON.RESPONSE_WEATHER))
+        server.enqueue(MockResponse().setBody(ApixuApiClientTest.JSON.RESPONSE_WEATHER))
         WeatherResultsTestHelper.assertWeatherResultsApixu(koinApixuMemoryRepository)
     }
 
     @Test
     fun getWeatherOpenWeather() {
-        server.enqueue(MockResponse().setBody(OpenWeatherApiClientDelegateTest.JSON.RESPONSE_WEATHER))
+        server.enqueue(MockResponse().setBody(OpenWeatherApiClientTest.JSON.RESPONSE_WEATHER))
         WeatherResultsTestHelper.assertWeatherResultsOpenWeather(daggerOpenWeatherMemoryRepository)
-        server.enqueue(MockResponse().setBody(OpenWeatherApiClientDelegateTest.JSON.RESPONSE_WEATHER))
+        server.enqueue(MockResponse().setBody(OpenWeatherApiClientTest.JSON.RESPONSE_WEATHER))
         WeatherResultsTestHelper.assertWeatherResultsOpenWeather(koinOpenWeatherMemoryRepository)
     }
 }

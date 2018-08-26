@@ -1,16 +1,16 @@
 package com.barbasdev.weatherappsample.core.presentation.weather.delegate
 
 import com.barbasdev.weatherappsample.core.network.openweather.dto.OpenWeatherCoord
-import com.barbasdev.weatherappsample.core.network.openweather.dto.OpenWeatherLocation
+import com.barbasdev.weatherappsample.core.network.openweather.dto.OpenWeatherLocationDto
 import com.barbasdev.weatherappsample.core.network.openweather.dto.OpenWeatherWeatherResult
 import com.barbasdev.weatherappsample.core.presentation.location.Location
-import com.barbasdev.weatherappsample.core.presentation.location.delegate.OpenWeatherLocationDelegate
+import com.barbasdev.weatherappsample.core.presentation.location.delegate.OpenWeatherLocation
 import com.barbasdev.weatherappsample.core.presentation.weather.Weather
 
 /**
  *
  */
-data class OpenWeatherWeatherDelegate(
+data class OpenWeatherWeather(
         private val weather: OpenWeatherWeatherResult
 ) : Weather {
 
@@ -23,13 +23,13 @@ data class OpenWeatherWeatherDelegate(
     override val location: Location
         get() {
             with(weather) {
-                val openWeatherLocation = OpenWeatherLocation(
+                val openWeatherLocation = OpenWeatherLocationDto(
                         id,
                         name,
                         sys.country,
                         OpenWeatherCoord(coord.lat ?: 0F, coord.lon ?: 0F)
                 )
-                return OpenWeatherLocationDelegate(openWeatherLocation)
+                return OpenWeatherLocation(openWeatherLocation)
             }
         }
 

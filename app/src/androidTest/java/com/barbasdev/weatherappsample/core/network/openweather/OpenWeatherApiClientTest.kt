@@ -19,7 +19,7 @@ import javax.inject.Named
 /**
  * Created by edu on 22/02/2018.
  */
-class OpenWeatherApiClientDelegateTest : KoinTest {
+class OpenWeatherApiClientTest : KoinTest {
 
     // dagger
     @Inject

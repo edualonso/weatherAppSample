@@ -20,7 +20,7 @@ import javax.inject.Named
 /**
  * Created by edu on 22/02/2018.
  */
-class ApixuApiClientDelegateTest : KoinTest {
+class ApixuApiClientTest : KoinTest {
 
     // dagger
     @Inject
