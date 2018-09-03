@@ -6,6 +6,7 @@ apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 27
+
     defaultConfig {
         applicationId "com.example.edu.myapplication"
         minSdkVersion 19
@@ -16,16 +17,19 @@ android {
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     dataBinding {
         enabled = true
     }
@@ -70,4 +74,10 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$dagger"
     kapt "com.google.dagger:dagger-compiler:$dagger"
     kapt "com.google.dagger:dagger-android-processor:$dagger"
+
+    implementation "org.koin:koin-android:$koin"
+    implementation "org.koin:koin-core:$koin"
+    implementation "org.koin:koin-android-architecture:$koin"
+    androidTestImplementation "org.koin:koin-test:$koin"
+    testImplementation "org.koin:koin-test:$koin"
 }

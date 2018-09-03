@@ -4,52 +4,143 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="8dp"
-    tools:context="com.barbasdev.weatherappsample.main.MainActivity">
+    android:orientation="horizontal"
+    android:weightSum="2">
 
-    <Button
-        android:id="@+id/buttonMemoryApixu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="MEMORY (APX)"/>
+    <!-- Dagger -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="8dp"
+        tools:context="com.barbasdev.weatherappsample.main.MainActivity">
 
-    <Button
-        android:id="@+id/buttonMemoryOpenWeather"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="MEMORY (OPN)" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="DAGGER" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20dp" />
+        <Button
+            android:id="@+id/buttonDaggerMemoryApixu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MEMORY (APX)"
+            android:textSize="12sp" />
 
-    <Button
-        android:id="@+id/buttonRoomApixu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ROOM (APX)"/>
+        <Button
+            android:id="@+id/buttonDaggerMemoryOpenWeather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MEMORY (OPN)"
+            android:textSize="12sp" />
 
-    <Button
-        android:id="@+id/buttonRoomOpenWeather"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ROOM (OPN)" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20dp" />
+        <Button
+            android:id="@+id/buttonDaggerRoomApixu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ROOM (APX)"
+            android:textSize="12sp" />
 
-    <Button
-        android:id="@+id/buttonRealmApixu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="REALM (APX)"/>
+        <Button
+            android:id="@+id/buttonDaggerRoomOpenWeather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ROOM (OPN)"
+            android:textSize="12sp" />
 
-    <Button
-        android:id="@+id/buttonRealmOpenWeather"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="REALM (OPN)" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <Button
+            android:id="@+id/buttonDaggerRealmApixu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="REALM (APX)"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/buttonDaggerRealmOpenWeather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="REALM (OPN)"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <!-- Koin -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="8dp"
+        tools:context="com.barbasdev.weatherappsample.main.MainActivity">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="KOIN" />
+
+        <Button
+            android:id="@+id/buttonKoinMemoryApixu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MEMORY (APX)"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/buttonKoinMemoryOpenWeather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MEMORY (OPN)"
+            android:textSize="12sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <Button
+            android:id="@+id/buttonKoinRoomApixu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ROOM (APX)"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/buttonKoinRoomOpenWeather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ROOM (OPN)"
+            android:textSize="12sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <Button
+            android:id="@+id/buttonKoinRealmApixu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="REALM (APX)"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/buttonKoinRealmOpenWeather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="REALM (OPN)"
+            android:textSize="12sp" />
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -14,3 +14,12 @@ interface Weather {
         const val NO_COORDS_VALUE = -1F
     }
 }
+
+
+/**
+ *
+ */
+data class WeatherWrapper(
+        val weather: Weather,
+        val source: String
+)
