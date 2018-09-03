@@ -19,7 +19,7 @@ class TestNetworkConstModule {
     @Provides
     @Named(NetworkConstants.APIXU_API_KEY)
     fun providesApixuApiKey(): String =
-            "11682c59698444f6b59160534171912"
+            NetworkConstants.CONST_APIXU_API_KEY
 
     @Provides
     @Named(NetworkConstants.OPENWEATHER_BASE_URL)
@@ -29,7 +29,7 @@ class TestNetworkConstModule {
     @Provides
     @Named(NetworkConstants.OPENWEATHER_API_KEY)
     fun providesOpenWeatherApiKey(): String =
-            "75805b09ea06260c9eb71391b785f444"
+            NetworkConstants.CONST_OPENWEATHER_API_KEY
 
     companion object {
         const val SERVER_PORT = 6666

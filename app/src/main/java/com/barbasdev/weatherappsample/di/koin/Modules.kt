@@ -65,13 +65,11 @@ object Modules {
         // Apixu api client
         bean(NetworkConstants.APIXU_API_CLIENT) {
             ApixuApiClient(get()) as ApiClient
-//            ApixuApiClient(get())
         }
 
         // Openweather api client
         bean(NetworkConstants.OPENWEATHER_API_CLIENT) {
             OpenWeatherApiClient(get()) as ApiClient
-//            OpenWeatherApiClient(get())
         }
     }
 
@@ -115,33 +113,27 @@ object Modules {
 
         // memory
         bean(RepositoryConstants.REPOSITORY_MEMORY_APIXU) {
-//            MemoryRepository(get<ApixuApiClient>()) as Repository
             MemoryRepository(get(NetworkConstants.APIXU_API_CLIENT)) as Repository
         }
         bean(RepositoryConstants.REPOSITORY_MEMORY_OPENWEATHER) {
-//            MemoryRepository(get<OpenWeatherApiClient>()) as Repository
             MemoryRepository(get(NetworkConstants.OPENWEATHER_API_CLIENT)) as Repository
         }
 
 
         // room
         bean(RepositoryConstants.REPOSITORY_ROOM_APIXU) {
-//            RoomRepository(get<ApixuApiClient>(), get(DatabaseConstants.ROOM_DB_APIXU_DAO_KOIN)) as Repository
             RoomRepository(get(NetworkConstants.APIXU_API_CLIENT), get(DatabaseConstants.ROOM_DB_APIXU_DAO_KOIN)) as Repository
         }
         bean(RepositoryConstants.REPOSITORY_ROOM_OPENWEATHER) {
-//            RoomRepository(get<OpenWeatherApiClient>(), get(DatabaseConstants.ROOM_DB_OPENWEATHER_DAO_KOIN)) as Repository
             RoomRepository(get(NetworkConstants.OPENWEATHER_API_CLIENT), get(DatabaseConstants.ROOM_DB_OPENWEATHER_DAO_KOIN)) as Repository
         }
 
 
         // realm
         bean(RepositoryConstants.REPOSITORY_REALM_APIXU) {
-//            RealmRepository(get<ApixuApiClient>(), get(DatabaseConstants.REALM_DB_APIXU_KOIN)) as Repository
             RealmRepository(get(NetworkConstants.APIXU_API_CLIENT), get(DatabaseConstants.REALM_DB_APIXU_KOIN)) as Repository
         }
         bean(RepositoryConstants.REPOSITORY_REALM_OPENWEATHER) {
-//            RealmRepository(get<OpenWeatherApiClient>(), get(DatabaseConstants.REALM_DB_OPENWEATHER_KOIN)) as Repository
             RealmRepository(get(NetworkConstants.OPENWEATHER_API_CLIENT), get(DatabaseConstants.REALM_DB_OPENWEATHER_KOIN)) as Repository
         }
     }
